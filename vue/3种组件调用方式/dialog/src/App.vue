@@ -4,10 +4,10 @@
     <Dialog title="登陆弹窗" :visible.sync="visible">
       <form class="form">
         <div class="form__item">
-          <label>用户名: </label><input type="text" ref="username"/>
+          <label>用户名</label><input type="text" ref="username"/>
         </div>
         <div class="form__item">
-          <label>密码: </label><input type="password"/>
+          <label>密码</label><input type="password"/>
         </div>
       </form>
       <div slot="footer" class="footer">

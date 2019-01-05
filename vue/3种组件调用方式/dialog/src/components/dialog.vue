@@ -38,7 +38,7 @@ export default {
 
 <style scoped>
 .dialog{display: flex; justify-content: center;align-items: center; position: fixed;left: 0; right: 0;top: 0;bottom: 0;}
-.dialog__modal{position: absolute;width: 100%;height: 100%;}
+.dialog__modal{position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, .3);}
 .dialog__wrap{position: relative; box-sizing: border-box; width: 50vw;background: #ffebd7;border-radius: 4px;}
 .dialog__header{text-align: center; height: 45px;line-height: 45px;color: #fff; background: #353235;}
 .dialog__footer{margin:0 10px; height: 40px;line-height: 40px;border-top: 1px solid #000;}
