@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            color: #fff;
+            text-align: center;
+        }
+        .left{
+            flex: 1;
+            height: 300px;
+            background: pink;
+        }
+        .right{
+            flex: 1;
+            height: 250px;
+            background: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+
+        function Item({item}) {
+            return (
+                <li>
+                    {item}
+                </li>
+            )
+        }
+
+        function List({items}){
+            return (
+                <ul>
+                    {
+                        items.map((item, index) => {
+                            return <Item key={index} {...item} />
+                        })
+                    }
+                </ul>
+            )
+        }
+
+        function connect(Component){
+            return class extends React.Component{
+                
+                state = {
+                    items: []
+                }
+
+                componentDidMount(){
+                    setTimeout(() => {
+                        this.setState({
+                            items: [
+                                {
+                                    item: '1',
+                                },
+                                {
+                                    item: '2',
+                                },
+                                {
+                                    item: '3',
+                                },
+                            ]
+                        })
+                    })
+                }
+
+                render(){
+                    return (
+                        <Component items={this.state.items}/>
+                    );
+                }
+            }
+        }
+
+        const ListContainer = connect(List);
+
+        const domContainer = document.querySelector('#app');
+        ReactDOM.render(<ListContainer />, domContainer);
+    </script>
+</body>
+
+</html>
