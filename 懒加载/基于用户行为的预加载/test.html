@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin:0;padding: 0;}
+        a{text-decoration: none;}
+        .tab a{display: inline-block;font-size: 14px;padding: 5px 0;margin: 0 15px;border-bottom: 3px solid transparent;color: #343;}
+        .tab .active{color: #019ee4;border-color: #019ee4;}
+        .panel{padding: 10px;}
+        .panel img{display: none;}
+        .panel .active{display: block;}
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <a href="javascript:;" class="active">美女A</a>
+        <a href="javascript:;">美女B</a>
+        <a href="javascript:;">美女C</a>
+    </div>
+    <div class="panel">
+        <img src="./img/1.jpg" class="active" alt="">
+        <img data-src="./img/2.jpg" alt="">
+        <img data-src="./img/3.jpg" alt="">
+    </div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $('.tab a').on({
+        click(){
+            $(this).addClass("active").siblings().removeClass('active');
+            $('.panel img').removeClass('active').eq($(this).index()).addClass('active');
+        },
+
+        // 鼠标hover时就去加载
+        mouseenter(){
+            if(this.preloaded) return;
+            const $img = $('.panel img').eq($(this).index());
+            $img.attr('src', $img.data('src')).removeAttr('data-srcc');
+            this.preloaded = true;
+        }
+    })
+    </script>
+</body>
+</html>
