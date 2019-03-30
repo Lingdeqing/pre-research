@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <p>我在360宽时字体是20px</p>
+    <div class="box">
+        我在360宽时尺寸是200x200
+    </div>
+    <script type="text/javascript">
+
+        function setRem(){
+
+            // 防止系统字体影响，当然也可以使用css去禁用系统字体设定
+            const html = document.getElementsByTagName('html')[0];
+            html.style.fontSize = '36px';
+            const div = document.createElement('div');
+            div.style.cssText = 'width:1rem;height:0;opacity:0;position:absolute;z-index:-1;'
+            document.body.appendChild(div);
+            const dw = div.offsetWidth;
+            document.body.removeChild(div);
+            let ratio = 1;
+            if(dw !== 36){
+                ratio = dw / 36;
+            }
+
+            const pageWidth = document.body.clientWidth || document.documentElement.clientWidth;
+            html.style.fontSize = 36* pageWidth / 360 / ratio + 'px';
+        }
+        setRem();
+        window.addEventListener('resize', setRem);
+    </script>
+</body>
+</html>

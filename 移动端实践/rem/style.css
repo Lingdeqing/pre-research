@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.box {
+  border: 0.027777777777777776rem solid pink;
+  height: 5.555555555555555rem;
+  width: 5.555555555555555rem;
+}
+p {
+  font-size: 0.5555555555555556rem;
+}
