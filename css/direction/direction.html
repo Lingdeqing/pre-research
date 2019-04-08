@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .rtl{
+            direction: rtl;
+            /* text-align: end; */
+        }
+        .scroll-container{
+            direction: rtl;
+            border: 1px solid;
+            height: 200px;
+            overflow-y: auto;
+        }
+        .content{
+            direction: ltr;
+        }
+
+        .dialog{
+            margin: 0 auto;
+            width: 50%;
+            padding-top: 200px;
+            border: 1px solid;
+        }
+        .footer{
+            text-align: right;
+            padding: 10px 50px;
+        }
+        .footer button{
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>翻转行内块元素</h1>
+    <p class="rtl">
+        <img src="./img/1.jpg" alt="">
+        <img src="./img/2.jpg" alt="">
+    </p>
+    <p class="rtl">
+        <span>span1</span>
+        <span>span2</span>
+    </p>
+    <p class="rtl">
+        <span style="display:inline-block;">span1</span>
+        <span>span2</span>
+    </p>
+
+    <h1>翻转滚动条</h1>
+    <div class="scroll-container">
+        <div class="content">
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+            <p>翻转滚动条</p>
+        </div>
+    </div>
+
+    <h1>翻转按钮位置</h1>
+    <div class="dialog">
+        <div class="footer rtl">
+            <button>确定</button>
+            <button>取消</button>
+        </div>
+    </div>
+</body>
+</html>
