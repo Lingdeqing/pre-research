@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        dl, dt, dd{margin: 0;padding: 0;}
+        dt{font-weight: bold;min-width: 30px;margin-right: 5px;}
+        dt, dd{display: inline-block;}
+        table{border-collapse: collapse;}
+        td{border: 1px solid;min-width: 100px;}
+        .arrow{color: red;}
+    </style>
+</head>
+<body>
+    <article>
+        <h2>基本概念</h2>
+        <dl>
+            <dt>dp</dt>
+            <dd>device pixels 物理分辨率</dd>
+        </dl>
+        <dl>
+            <dt>px</dt>
+            <dd>pixels 浏览器抽象分辨率</dd>
+        </dl>
+        <dl>
+            <dt>dpr</dt>
+            <dd>devicePixelRatio dp/px 缩放比</dd>
+        </dl>
+        <dl>
+                <dt>ppi</dt>
+                <dd>pixels per inch 每英寸像素数量, 像素密度</dd>
+            </dl>
+    </article>
+    <article>
+        <h2>不同像素密度的对应的缩放比</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>ppi</strong></td>
+                    <td>120</td>
+                    <td>160</td>
+                    <td>240</td>
+                    <td>320</td>
+                </tr>
+                <tr>
+                    <td><strong>dpr</strong></td>
+                    <td>0.75</td>
+                    <td>1</td>
+                    <td>1.5</td>
+                    <td>2</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+    <article>
+        <h2>抽象分辨率推导</h2>
+        <p>
+            比如手机物理分辨率为1136dp*640dp <span class="arrow">=></span><br>
+            若手机是4英寸屏幕则可以求得Math.sqrt(1136*1136+640*640)/4 = 326ppi<span class="arrow">=></span><br>
+            326ppi的屏幕默认缩放比dpr = 2比较合适 <span class="arrow">=></span><br>
+            浏览器的抽象分辨率是 568px*320px<br>
+        </p>
+    </article>
+</body>
+</html>
