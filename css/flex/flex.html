@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{background: pink;height: 100px;width: 100px;margin-right: 10px;}
+        .flex{display: flex;}
+        
+        .initial .box{flex: initial;}
+        
+        .auto .box{flex: auto;}
+        
+        .none .box{flex: none;}
+
+        .positive-number .box{flex: 1;}
+        .positive-number .box:first-child{flex: 1.5;}
+
+        .positive-number2 .box{flex: 1 1 auto;}
+        .positive-number2 .box:first-child{flex: 2 0;}
+
+        .size-number .box{flex: 50px;}
+        .size-number .box:first-child{flex: 100px;}
+
+        .number .box{flex: 0 150px;}
+        .number .box:first-child{flex: 0.5 150px;}
+    </style>
+</head>
+<body>
+    <p><a href="https://www.zhangxinxu.com/wordpress/2018/10/display-flex-css3-css/">张鑫旭博客</a></p>
+    <h1>flex: initial / 0 1 auto;</h1>
+    <h2>不生长，空间不够时缩小</h2>
+    <div class="initial flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h1>flex: auto / 1 1 auto;</h1>
+    <h2>空间多出时生长，空间不够时缩小</h2>
+    <div class="auto flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h1>flex: none / 0 0 auto;</h1>
+    <h2>不生长，不缩小</h2>
+    <div class="none flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h1>flex: positive-number / positive-number 1 0%;</h1>
+    <h2>设置1个正数</h2>
+    <div class="positive-number flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h1>flex: positive-number positive-number / positive-number positive-number 0%;</h1>
+    <h2>设置2个正数</h2>
+    <div class="positive-number2 flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h1>flex: size-number / 1 1 size-number;</h1>
+    <h2>设置1个尺寸，带单位或者百分比</h2>
+    <div class="size-number flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h1>flex: positive-number size-number / positive-number 1 size-number;</h1>
+    <h2>设置1个正数和1个尺寸</h2>
+    <div class="number flex">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+</body>
+</html>
