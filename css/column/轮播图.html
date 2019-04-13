@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            margin:20px auto;
+            width: 320px;
+        }
+        .wrap{
+            position: relative;
+            padding-top: 123.53%;
+            overflow: hidden;
+        }
+        .imgs{
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 300%;
+            column-count: 3;
+            column-gap: 0;
+            column-rule: none;
+        }
+        img{
+            vertical-align: top;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="imgs">
+            <img src="./img/1.jpeg" alt="">
+            <img src="./img/2.jpeg" alt="">
+            <img src="./img/3.jpeg" alt="">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var slider = document.querySelector('.imgs');
+        var imgs = document.querySelectorAll('.imgs img');
+        var imgLen = imgs.length + 2;
+        var current = 0;
+        function init(){
+            slider.appendChild(imgs[0].cloneNode());
+            slider.insertBefore(imgs[imgs.length-1].cloneNode(), imgs[0]);
+            slider.style.cssText = `width: ${100*imgLen}%;column-count: ${imgLen};left: -${(1+current)*100}%`;
+        }
+        init();
+        function next(){
+            slider.style.left = `-${(1+current+1)*100}%`;
+            slider.style.transition = 'left 0.2s';
+            const callback = function(){
+                slider.removeEventListener('transitionend', callback);
+                slider.style.transition = 'none';
+                if(current == imgs.length-1){   // 最后一张滑到第一张
+                    current = 0;
+                    slider.style.left = `-${(1+current)*100}%`;
+                } else {
+                    current ++;
+                }
+            }
+            slider.addEventListener('transitionend', callback)
+        }
+
+        setInterval(next, 10000)
+    </script>
+</body>
+</html>
