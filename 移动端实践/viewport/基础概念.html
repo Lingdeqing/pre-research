@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -15,36 +16,83 @@
     <!-- <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" /> -->
     <title>Document</title>
     <style>
-        body{
-            word-break: break-all;
-            margin: 0;
-            padding: 0;
+        code{
+            display: block;
+            padding: 5px;
+            border-radius: 4px;
+            background: black;
+            color: #fff;
         }
-        .box{
-            box-sizing: border-box;
-            width: 640px;
-            min-height: 100px;
-            border: 1px solid red;
+        .mark {
+            color: red;
         }
     </style>
 </head>
+
 <body>
     <div class="box">
-        一共有两个viewport,<br>
-            一个layout viewport(布局viewport,document.body.clientWidth)，ios上默认为980宽，浏览器现在这个看不见的布局viewport上渲染页面<br>
-            一个visual viewport(可视viewport或叫度量viewport,window.innerWidth)，浏览器再将980的页面缩放显示到visual viewport上面<br>
-        缩放比initial-scale,<br>
-            等于window.innerWidth/document.body.clientWidth<br>
-            initial-scale自带width=device-width效果<br>
-        最佳实践<br>
-            布局viewport=设备宽度=度量viewport<br>
-        方案一<br>
-            设计直接设计320或者360宽的图，然后使用上面的最佳实践设置，或者640宽的图，设置尺寸时人工除以2，切图使用2倍图<br>
-        方案二<br>
-            设计出640的设计图，initial-scale使用0.5
+
+        <p>
+            <h1>viewport基础概念</h1>
+            <p>参考链接:<a href="https://www.cnblogs.com/2050/p/3877280.html">https://www.cnblogs.com/2050/p/3877280.html</a></p>
+            <p>
+                <h2>3个viewport</h2>
+                <p>
+
+                    <h3>layout viewport<span class="mark">(存疑???)</span></h3>
+                    布局viewport,document.body.clientWidth，ios上默认为980宽，浏览器现在这个看不见的布局viewport上渲染页面
+                </p>
+                <p>
+                    <h3>visual viewport<span class="mark">(存疑???)</span></h3>
+                    可视viewport或叫度量viewport,window.innerWidth，浏览器再将980的页面缩放显示到visual viewport上面
+                </p>
+                <p>
+                    <h3>idea viewport</h3>
+                    理想viewport，和屏幕一样独立像素一样宽的viewport
+                </p>
+            </p>
+            <p>
+                <h2>缩放比initial-scale</h2>
+                <p>等于idea viewport宽度/当前viewport宽度</p>
+                <p>效果就是看到的页面内容会被缩放，比如设置20px的字体，如果设置intial-scale为2，则字体看起来大了一倍，于是20px就对应原先的40px</p>
+            </p>
+            <p>
+                <h2>width解释</h2>
+                <p>指当前viewport的宽度, width=device-width设置和设备宽度一样，当前viewport就和idea viewport效果一样了</p>
+            </p>
+            <p>
+                <h2>示例</h2>
+                <p>
+                    <code> width=400,initial-scale=1</code>
+                    如果屏幕宽度为360,则当前viewport宽度就是360;
+                    如果屏幕宽度为420时，则当前viewport为420*1
+                </p>
+                <p>
+                    <code>width=400,initial-scale=0.8</code>
+                    如果屏幕宽度为360,则当前viewport宽度就是450;
+                </p>
+                <p>
+                    <h3>解释</h3>
+                    当width和initial-scale冲突时，取大的那个
+                </p>
+            </p>
+            <p>
+                <h2>最佳实践</h2>
+                <p>
+                    <code>width=device-width,initial-scale=1</code>
+                    <p>为啥写俩？这是为了兼容，因为单独设置width，iPhone横屏时device-width取的还是竖屏的宽度，单独设置initial-scale，ie横屏时idea viewport宽度取得是竖屏时的宽度</p>
+                </p>
+                <p>
+                    <h3>方案一</h3>
+                    设计直接设计320或者360宽的图，然后使用上面的最佳实践设置，或者640宽的图，设置尺寸时人工除以2，切图使用2倍图
+                </p>
+                <p>
+                    <h3>方案二</h3>
+                    设计出640的设计图，initial-scale使用0.5
+                </p>
+            </p>
+        </p>
     </div>
-    <textarea name="" id="" cols="30" rows="10">
-        asdfa
-    </textarea>
 </body>
+
 </html>
