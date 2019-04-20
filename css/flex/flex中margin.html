@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .auto-margin{
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+        .auto-margin{
+            display: flex;
+        }
+        .auto-margin .bottom{
+            margin-top: auto;
+        }
+        .auto-margin .right{
+            margin-left: auto;
+        }
+        .auto-margin .center{
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>margin-top: auto;</h2>
+    <div class="auto-margin">
+        <div class="box bottom"></div>
+    </div>
+
+
+    <h2>margin-left: auto;</h2>
+    <div class="auto-margin">
+        <div class="box right"></div>
+    </div>
+
+    <h2>margin: auto;</h2>
+    <div class="auto-margin">
+        <div class="box center"></div>
+    </div>
+
+
+    <div class="auto-margin" style="width:400px;">
+        <div class="box right"></div>
+        <div class="box right"></div>
+    </div>
+
+</body>
+</html>
