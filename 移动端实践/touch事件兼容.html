@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box" style="height: 200px;background: pink;color: white;text-align: center;line-height: 200px;">左滑我</div>
+    <div class="result"></div>
+    <script type="text/javascript" src="https://unpkg.com/zepto@1.2.0/dist/zepto.min.js"></script>
+    <script type="text/javascript">
+    let start = null;
+    $('.box').on('touchstart', function(e){
+        // 此处必须这样复制，因为ios9 touches会和changedTouches会共用一个对象
+        // 同时Touch对象无法解构
+        start = {pageX: e.touches[0].pageX, pageY: e.touches[0].pageY};
+    })
+    $('.box').on('touchmove', function(e){
+        const touch = e.changedTouches[0];
+        const deltaX = touch.pageX - start.pageX;
+        const deltaY = touch.pageY - start.pageY;
+        $('.result').html(deltaX+ ',' + deltaY);
+    })
+    </script>
+</body>
+</html>
