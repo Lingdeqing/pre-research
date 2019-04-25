@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{
+            filter: url(#change);
+        }
+        .container{
+            display: flex;
+            width: 200px;
+            height: 200px;
+            background: pink;
+            margin-bottom: 20px;
+        }
+        .bg{
+            display: flex;
+            margin: auto;
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            filter: url(#change2)
+        }
+        .dot{
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            background: #f00;
+        }
+
+        .youpin{
+            display: flex;
+            width: 200px;
+            height: 200px;
+            background: #f3f3f3;
+        }
+        .youpin-bg{
+            display: flex;
+            margin: auto;
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            filter: url(#change3);
+        }
+        .youpin-dot{
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            background:rgb(209, 191, 166);
+        }
+    </style>
+</head>
+<body>
+    <svg height="0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="change">
+                    <feColorMatrix type="matrix" values="
+                    0 0 1 0 0
+                    1 0 0 0 0 
+                    0 1 0 0 0 
+                    0 0 0 1 0" />
+            </filter>
+            <filter id="change2">
+                    <feColorMatrix type="matrix" values="
+                    1 0 0 0 0
+                    0 0 0 0 0 
+                    0 0 0 0 0 
+                    1 0 -1 0 0" />
+            </filter>
+            <filter id="change3">
+                    <feColorMatrix type="matrix" values="
+                    1 0 0 0 0
+                    0 1 0 0 0 
+                    0 0 1 0 0 
+                    7 0 -7 0 0" />
+            </filter>
+        </defs>
+    </svg>
+    <img src="./img/rgb.png" alt="">
+    
+    <div class="container">
+        <div class="bg">
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <div class="youpin">
+        <div class="youpin-bg">
+            <div class="youpin-dot"></div>
+        </div>
+    </div>
+    <p>
+        1.矩阵计算原则，色值除以255得到其小数表示，然后代入矩阵计算<br>
+        2.透明度，可以计算出大于1的值和小于0的值，不需要拘泥<br>
+    </p>
+</body>
+</html>
