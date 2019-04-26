@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .flex{
+            display: flex;
+            flex-wrap: wrap;
+            height: 200px;
+            width: 1200px;
+            border: 1px solid;
+        }
+        .box{
+            width: 200px;
+            /* width: 50px; */
+            margin: 10px;
+            background: gray;
+            color: #fff;
+        }
+        .align-content-start{
+            align-content: flex-start;
+        }
+        .align-items-start{
+            align-content: stretch;
+            align-items: flex-start;
+        }
+        .align-content-center{
+            align-content: center;
+        }
+        .align-items-center{
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        只有一行是align-content失效
+    </p>
+    <p>
+        多行时, align-content是针对所有的行如何使用多余空间<br>
+        而align-items是针对子项在行的交叉轴方向如何对齐<br>
+    </p>
+    <h2>default/align-content: stretch;</h2>
+    <div class="flex">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+        <div class="box">6</div>
+        <div class="box">7</div>
+        <div class="box">8</div>
+        <div class="box">9</div>
+        <div class="box">10</div>
+    </div>
+    <h2>align-content: start;</h2>
+    <div class="flex align-content-start">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+        <div class="box">6</div>
+        <div class="box">7</div>
+        <div class="box">8</div>
+        <div class="box">9</div>
+        <div class="box">10</div>
+    </div>
+    <h2>align-items: start;</h2>
+    <div class="flex align-items-start">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+        <div class="box">6</div>
+        <div class="box">7</div>
+        <div class="box">8</div>
+        <div class="box">9</div>
+        <div class="box">10</div>
+    </div>
+    <h2>align-items: center;</h2>
+    <div class="flex align-items-center">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+        <div class="box">6</div>
+        <div class="box">7</div>
+        <div class="box">8</div>
+        <div class="box">9</div>
+        <div class="box">10</div>
+    </div>
+    <h2>align-content: center;</h2>
+    <div class="flex align-content-center">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+        <div class="box">6</div>
+        <div class="box">7</div>
+        <div class="box">8</div>
+        <div class="box">9</div>
+        <div class="box">10</div>
+    </div>
+</body>
+</html>
