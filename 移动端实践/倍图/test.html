@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .bg {
+            width: 300px;
+            height: 300px;
+            background: url("./img/300.jpg");
+            background-size: 300px 300px;
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2),
+        /* Webkit-based browsers */
+        (min--moz-device-pixel-ratio: 2),
+        /* Older Firefox browsers (prior to Firefox 16) */
+        (min-resolution: 2dppx),
+        /* The standard way */
+        (min-resolution: 192dpi)
+
+        /* dppx fallback */
+            {
+            .bg {
+                background-image: url("./img/600.jpg");
+            }
+        }
+
+        .bg2{
+            width: 300px;
+            height: 300px;
+            background-image: -webkit-image-set(url('./img/300.jpg') 1x, url('./img/600.jpg') 2x);
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>使用css媒体查询device-pixel-ratio</h2>
+    <div class="bg"></div>
+    <h2>css使用image-set</h2>
+    <div class="bg2"></div>
+    <h2>使用img srcset属性</h2>
+    <img src="./img/300.jpg" alt="" srcset="./img/600.jpg 2x">
+    <h2>响应式图片(显示的图片的尺寸和加载哪张图片由dpr和屏幕宽度同时决定</h2>
+    <h3>计算规则参考链接：<a href="https://www.zhangxinxu.com/wordpress/2015/11/anatomy-of-responsive-images/">HTML5响应式图片技术中文图解</a></h3>
+    <img src="./img/300.jpg" alt="" srcset="./img/300.jpg 300w, ./img/600.jpg 600w" sizes="(min-width: 600px) 600px, 300px">
+</body>
+
+</html>
