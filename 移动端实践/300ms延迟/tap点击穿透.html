@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            font-size: 50px;
+        }
+
+        .modal {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: pink;
+            color: white;
+            padding: 10px;
+        }
+
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: absolute;top:0;left: 0;right: 0;padding: 20px;z-index: -1;">
+        <p>
+            当tap和click混用或者tap下面正好有个原生标签a、input之类的，会发生穿透
+            测试了好像safari好的
+        </p>
+
+        <h2>解决方案</h2>
+        <ul>
+            <li>关闭modal时,加延迟</li>
+            <li>关闭modal时,在下面加个蒙层,300ms后隐藏蒙层</li>
+            <li>不混用tap和click,使用tap(touchend)+span(代替原生标签)</li>
+        </ul>
+
+    </div>
+
+    <span id="click" class="btn">我被点击了</span>
+    <div class="modal">
+        <span id="tap" class="btn">点我发生穿透</span>
+    </div>
+    <script type="text/javascript" src="./zepto.js"></script>
+    <script type="text/javascript">
+        $('#tap').tap(function () {
+            $('.modal').hide()
+        })
+        $('#click').click(function () {
+            alert('发生穿透了')
+        })
+    </script>
+</body>
+
+</html>
