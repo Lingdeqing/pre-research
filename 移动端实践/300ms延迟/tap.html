@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        body{
+        body {
             font-size: 50px;
         }
-        .box1{
+
+        .box1 {
             display: inline-block;
             width: 400px;
             height: 400px;
@@ -19,6 +21,7 @@
         }
     </style>
 </head>
+
 <body>
     <p>点击测试tap和click</p>
     <div>
@@ -29,22 +32,23 @@
         <span class="box1" id="click">click</span>
         <span></span>
     </div>
-    
+
     <script type="text/javascript" src="./zepto.js"></script>
     <script type="text/javascript">
-    let tapStart, clickStart;
-    $('#tap').tap(function(){
-        $(this).next().html(Date.now() - tapStart);
-    }).on('touchstart', function(){
-        tapStart = Date.now();
-    })
+        let tapStart, clickStart;
+        $('#tap').tap(function () {
+            $(this).next().html(Date.now() - tapStart);
+        }).on('touchstart', function () {
+            tapStart = Date.now();
+        })
 
-    $('#click').click(function(){
-        $(this).next().html(Date.now() - clickStart);
-    }).on('touchstart', function(){
-        clickStart = Date.now();
-    })
+        $('#click').click(function () {
+            $(this).next().html(Date.now() - clickStart);
+        }).on('touchstart', function () {
+            clickStart = Date.now();
+        })
 
     </script>
 </body>
+
 </html>

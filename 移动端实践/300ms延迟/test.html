@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width">
     <title>Document</title>
     <style>
-        .box1{
+        .box1 {
             width: 100px;
             height: 100px;
             background: pink;
@@ -15,6 +16,7 @@
         }
     </style>
 </head>
+
 <body>
     <p>点击方块，体验300ms延迟</p>
     <div class="box1"></div>
@@ -22,24 +24,25 @@
         <label><input type="checkbox" name="btn" checked>设置width=device-width</label>
     </div>
     <script type="text/javascript">
-    var box1 = document.querySelector('.box1');
-    let start = 0;
-    box1.addEventListener('click', function(){
-        box1.innerHTML = Date.now() - start;
-    })
-    box1.addEventListener('touchstart', function(){
-        start = Date.now();
-    })
-    const viewport = document.querySelector('[name="viewport"]');
-    const checkbox = document.getElementsByName('btn')[0];
-    checkbox.addEventListener('change', function(){
-        if(this.checked){
-            viewport.setAttribute('content', 'width=device-width');
-        } else {
-            viewport.setAttribute('content', '');
-        }
-    })
+        var box1 = document.querySelector('.box1');
+        let start = 0;
+        box1.addEventListener('click', function () {
+            box1.innerHTML = Date.now() - start;
+        })
+        box1.addEventListener('touchstart', function () {
+            start = Date.now();
+        })
+        const viewport = document.querySelector('[name="viewport"]');
+        const checkbox = document.getElementsByName('btn')[0];
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                viewport.setAttribute('content', 'width=device-width');
+            } else {
+                viewport.setAttribute('content', '');
+            }
+        })
 
     </script>
 </body>
+
 </html>
