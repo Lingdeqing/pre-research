@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        background: pink;
+        height: 30vh;
+        margin-bottom: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div class="box" id="box1"></div>
+    <div class="box" id="box2"></div>
+    touchmove: 
+    <p id="touchmove"></p>
+    touchend: 
+    <p id="touchend"></p>
+    <p>
+        touches: 整个屏幕上所有的触摸点<br>
+        changedTouches: 当前绑定事件的节点上面改变的触摸点<br>
+        targetTouches: 当前绑定事件的节点上面的触摸点
+    </p>
+    <script type="text/javascript" src="../300ms延迟/zepto.js"></script>
+    <script type="text/javascript">
+    $('#box1').on('touchmove', function(e){
+        e.preventDefault(); // 安卓有些版本touchmove事件触发一次, touchend不触发
+        $('#touchmove').html(`touches: ${e.touches.length}<br>
+        changedTouches: ${e.changedTouches.length}<br>
+        targetTouches: ${e.targetTouches.length}<br>
+        `);
+    }).on('touchend', function(e){
+        $('#touchend').html(`touches: ${e.touches.length}<br>
+        changedTouches: ${e.changedTouches.length}<br>
+        targetTouches: ${e.targetTouches.length}<br>
+        `);
+    })
+    </script>
+</body>
+</html>
