@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        html {
+            -ms-touch-action: none;
+        }
+
+        body,
+        ul,
+        li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        #wrapper {
+            margin: 20px;
+            background: #ccc;
+            overflow: hidden;
+        }
+
+        #scroller {
+            width: 1200px;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            user-select: none;
+            text-size-adjust: none;
+            background: pink;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div id="scroller">
+            水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦水平滚动啦
+        </div>
+    </div>
+    <p>
+        使用iscroll兼容安卓端的弹性滚动
+    </p>
+
+    <script type="text/javascript" src="./iscroll.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            new IScroll('#wrapper', { scrollX: true, freeScroll: true });
+        }
+        document.addEventListener('touchmove', function (e) { e.preventDefault(); }, {  // 防止触发浏览器水平手势
+            capture: false,
+            passive: false
+        });
+    </script>
+</body>
+
+</html>
