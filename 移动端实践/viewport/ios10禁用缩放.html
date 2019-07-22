@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1, user-scalable=no" />
+    <style>
+        .box {
+            padding: 20px 20px;
+            background: pink;
+            color: #fff;
+            word-break: break-all;
+        }
+
+        /*只能禁用双击缩放，无法禁用手势缩放*/
+        /*html, body {
+            touch-action: manipulation; 
+        }*/
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <p>
+            <h1>ios10禁用缩放</h1>
+            <p>
+                <div><i>ios10以后为了获得Accessibility，ios认为缩放是必须提供给用户的功能</i></div>
+                <div><i></i>Pinch-to-zoom is always enabled for all users. The viewport setting for user-scalable is
+                    ignored.</i></div>
+                <div>
+                    iOS Safari上Double-tap跟Pinch依然会触发zoom-in/zoom-out。
+                </div>
+            </p>
+            <p>参考链接：https://medium.com/@littleDog/%E5%A6%82%E4%BD%95%E8%A7%A3%E6%B1%BA-user-scalable-no-%E5%B1%AC%E6%80%A7%E8%A2%ABios-safari-ignore-e6a0531050ba
+            </p>
+        </p>
+    </div>
+    <code>
+    <h1>解决方案</h1>
+    <h2>只能解决正常的双击和手势缩放，如果有杠精在滚动的同时使用双指缩放，则无法处理</h2>
+    <pre>
+            document.addEventListener('touchstart', (event) => {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+    
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', (event) => {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+    </pre>
+</code>
+    <script>
+
+        document.addEventListener('touchstart', (event) => {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (event) => {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+    </script>
+</body>
+
+</html>
