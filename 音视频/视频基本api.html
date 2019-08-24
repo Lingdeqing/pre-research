@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <video id="video" src="./0590c5864282a08c5e039a9822813bbd.mp4"></video>
+    <p>
+        <div>当前： <span id="currentTime"></span></div>
+        <div>总共： <span id="duration"></span></div>
+    </p>
+    <p>
+    <button id="play">play</button>
+    <button id="stop">stop</button>
+    <button id="loud">大声</button>
+    <button id="low">小声</button>
+    <button id="mute">静音</button>
+    <button id="1x">1x</button>
+    <button id="2x">2x</button>
+    <button id="go10">快进10s</button>
+    <button id="back10">快退10s</button></p>
+    <script>
+        var $ = document.getElementById.bind(document);
+        var $video = $('video');
+        $('play').addEventListener('click', function(){
+            $video.play();
+        })
+        $('stop').addEventListener('click', function(){
+            $video.pause();
+        })
+        $('loud').addEventListener('click', function(){
+            if($video.volume > 0.9) $video.volume = 1;
+            else $video.volume += 0.1;
+        })
+        $('low').addEventListener('click', function(){
+            if($video.volume < 0.1) $video.volume = 0;
+            else $video.volume -= 0.1;
+        })
+        $('mute').addEventListener('click', function(){
+            $video.muted = !$video.muted;
+        })
+        $('2x').addEventListener('click', function(){
+            $video.playbackRate = 2;
+        })
+        $('1x').addEventListener('click', function(){
+            $video.playbackRate = 1;
+        })
+        $('go10').addEventListener('click', function(){
+            $video.currentTime += 10;
+        })
+        $('back10').addEventListener('click', function(){
+            $video.currentTime -= 10;
+        })
+        $video.addEventListener('loadeddata', function(){
+            $('duration').innerHTML = $video.duration;
+        })
+        $video.addEventListener('timeupdate', function(){
+            $('currentTime').innerHTML = $video.currentTime;
+        })
+    </script>
+</body>
+</html>
