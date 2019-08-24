@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <video></video>
+    <button>play</button>
+    <script>
+        var src = null;
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onreadystatechange = function(){
+            if(xhr.status === 200 && xhr.readyState === 4){
+                console.log('视频加载完成');
+                src = URL.createObjectURL(xhr.response);
+            } else if(xhr.readyState === 3){
+                console.log('正在加载视频');
+            }
+        }
+        xhr.open('GET', './0590c5864282a08c5e039a9822813bbd.mp4');
+        xhr.send(null);
+
+        document.querySelector('button').addEventListener('click', function(){
+            var video = document.querySelector('video');
+            video.src = src;
+            video.play();
+        })
+    </script>
+</body>
+</html>
