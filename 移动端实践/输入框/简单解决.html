@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            padding: 10px;
+            position: relative;
+        }
+        #test{
+            /* position: fixed; */
+            background: red;
+            top: 150px;
+            width: 200px;
+            left: 0;
+            height: 50px;
+        }
+        #log{
+            position: fixed;
+            top: 200px;
+            width: 300px;
+            border: 1px solid red;
+        }
+        .fake-input{
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid red;
+        }
+        .real-input{
+            display: none;
+            position: absolute;
+            border: 1px solid red;
+            outline: none;
+            box-shadow: none;
+            height: 30px;
+            width: 300px;
+            line-height: 30px;
+        }
+        .real-input:focus{
+            border-color: blue;
+        }
+        .has-keyboard{
+            padding-bottom: 350px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+        <li>21</li>
+        <li>22</li>
+        <li>23</li>
+        <li>24</li>
+        <li>25</li>
+        <li>26</li>
+        <li>27</li>
+        <li>28</li>
+        <li>29</li>
+        <li>30</li>
+        <li>31</li>
+        <li>32</li>
+        <li>33</li>
+        <li>34</li>
+        <li>35</li>
+        <li>36</li>
+        <li>37</li>
+        <li>38</li>
+        <li>39</li>
+        <li>40</li>
+    </ul>
+    <input type="text" id="test"/>
+    <!-- <div class="fake-input"></div>
+    <input class="real-input" type="text"/>
+    <input type="text" id="log"/> -->
+    <!-- <input type="text" /> -->
+    <script src="./zepto.js"></script>
+    <script>
+        document.getElementById('test').onfocus = function(){
+            $('body').addClass('has-keyboard');
+            this.scrollIntoView(true);
+        }
+        document.getElementById('test').onblur = function(){
+            $('body').removeClass('has-keyboard');
+        }
+        // input框在正常文件流中 安卓端 chrome uc 小米浏览器 微信 不管页面如何滚动啥的，点击输入框，页面会自动滚动使得输入框显示在输入法上方。
+        // 安卓端 chrome uc 小米浏览器 : 在fix布局时(不管是input设置fix，还是input父容器设置fixed) 都是正常的fixed表现行为，只是输入法弹出后，窗口变小了，
+        // 绝对定位时，布局也不会被破坏
+        // 绝对定位和fixed布局时，如果希望input能贴着输入法，只要设置bottom 0就可以了
+
+
+        // ios safari chrome uc 微信 绝对定位表现正常 fixed定位表现异常
+        // ios 正常文件流 safari ok 其他 当在底部时会有问题
+        
+        
+
+        // $('#test').click(function(){
+        //     setTimeout(function(){
+        //         // $('#test')[0].scrollIntoView(true);
+        //     }, 1000)
+        // })
+        // let winH = window.innerHeight;
+        // $('.fake-input').on('click', function(e){
+        //     // e.preventDefault();
+        //     // e.stopPropagation();
+        //     $('.real-input').show().focus()
+        //     // setTimeout(() => {  // 安卓 微信、安卓 uc 、 安卓chrome、安卓小米浏览器
+        //     //     // $('#log').val(window.pageYOffset)
+        //     //     document.body.scrollTop = 10000;
+        //     //     document.documentElement.scrollTop = 10000; 
+        //     //     // window.pageYOffset = 10000;
+        //     // }, 1000)
+        //     setInterval(function(){
+        //         let keyboardHeight = winH - window.innerHeight ;
+        //         $('.real-input')
+        //         .css({
+        //             top: window.innerHeight - keyboardHeight - $('.real-input').height()
+        //         })
+        //     }, 1000)
+        // })
+        // $('.real-input').on('input', function(){
+        //     $('.fake-input').html($(this).val())
+        // }).on('focusout', function(){
+        //     $(this).hide();
+        // })
+
+    //     $('#textarea').css('height', 0);
+    // $('#textarea').css('height', $('#textarea')[0].scrollHeight);
+
+    // setInterval(function(){
+    //     $('#log').val('winH: '+window.innerHeight+', scrollH: '+getScrolllHeight()+ ', keyH: '+(winH - window.innerHeight))
+    // }, 1000)
+    // function getScrolllHeight(el){
+    //     if(!el || el === window || el === document || el === document.body || el === document.documentElement){
+    //         return document.documentElement.scrollHeight || document.body.scrollHeight;
+    //     }
+    //     return 0;
+    // }
+    </script>
+</body>
+</html>

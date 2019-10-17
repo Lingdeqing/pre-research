@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: #eff0f4;
+        }
+        .form{
+            padding: 10px 10px 80px 10px;
+            line-height: 27px;
+        }
+        .field{
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+        }
+        .field label{
+            width: 4em;
+            padding-right: .5em;
+            flex: none;
+            text-align: right;
+        }
+        .field-content{
+            display: flex;
+            flex: 1;
+        }
+        .field-content input{
+            padding: 0 10px;
+            flex: 1;
+            border: 1px solid #f1f1f1;
+            outline: none;
+            box-shadow: none;
+        }
+        .field-content textarea{
+            padding: 0 10px;
+            flex: 1;
+            border: 1px solid #f1f1f1;
+            outline: none;
+            box-shadow: none;
+            height: 10em;
+            line-height: 27px;
+            resize: none;
+        }
+        .field-content input:focus{
+            border: 1px solid #457bfc;
+        }
+        .submit{
+            display: flex;
+            justify-content: flex-end;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 50px;
+            background: #fff;
+        }
+        .submit button{
+            text-align: center;
+            width: 100px;
+            height: 50px;
+            line-height: 30px;
+            background: #ff5858;
+            color: #fff;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <textarea ></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <textarea ></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <textarea ></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <input type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label>姓名: </label>
+            <div class="field-content">
+                <textarea ></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="submit">
+        <button type="button">提交</button>
+    </div>
+    <script>
+        let focusItem = null;
+        document.body.addEventListener('focus', function(e){
+            focusItem = e.target || e.srcElement;
+        }, true);
+
+        window.addEventListener('resize', function(){
+            // alert(1)
+        })
+
+
+    </script>
+    <script>
+        // 禁用缩放
+        document.addEventListener('touchstart', (event) => {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (event) => {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+    </script>
+</body>
+</html>
