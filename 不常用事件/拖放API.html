@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>视频</title>
+    <style>
+        .upload-area {
+            position: relative;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px dashed #eee;
+            height: 200px;
+            color: #666;
+        }
+
+        .upload-area input {
+            cursor: pointer;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+        }
+
+        .filename {
+            color: #000;
+        }
+
+        .filename {
+            display: none;
+        }
+
+        .has-file .filename {
+            display: block;
+        }
+
+        .has-file .no-file {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="upload-area">
+        <input type="file" id="fileinput" />
+        <span class="no-file">拖放文件</span>
+        <span class="filename"></span>
+    </div>
+
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script>
+        var file = null;
+        $('#fileinput').on('change', function (e) {
+            setFile(e.target.files[0])
+            e.target.value = ''
+        })
+        $('#fileinput').on('drop', function (e) {
+            e.preventDefault();
+            setFile(e.originalEvent.dataTransfer.files[0])
+        })
+        function setFile(_file) {
+            file = _file;
+            if (file) {
+                $('.upload-area').addClass('has-file');
+                $('.filename').html(file.name)
+            } else {
+                file = null;
+                $('.upload-area').removeClass('has-file');
+            }
+        }
+    </script>
+</body>
+
+</html>
