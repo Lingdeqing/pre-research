@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <a href="../懒加载/基于用户行为的预加载/img/1.jpg" download="1.jpg">点击链接下载</a>
+    <button type="button" id="download-btn">js下载</button>
+    <script>
+        document.getElementById('download-btn').onclick = function(){
+            download('../懒加载/基于用户行为的预加载/img/1.jpg', '1.jpg')
+        }
+        function download(url, filename){
+            // 创建隐藏的可下载链接
+            var eleLink = document.createElement('a');
+            eleLink.download = filename;
+            eleLink.style.display = 'none';
+            // 字符内容转变成blob地址
+            eleLink.href = url
+            // 触发点击
+            document.body.appendChild(eleLink);
+            eleLink.click();
+            // 然后移除
+            document.body.removeChild(eleLink);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>使用FormData上传</h2>
+    <p>
+        <input type="file" id="file-input" />
+        <button type="button" id="upload-btn">上传</button>
+    </p>
+    <script>
+        document.getElementById('upload-btn').addEventListener('click', function () {
+            var input = document.getElementById('file-input');
+            var file = input.files[0];
+            if (file) {
+                var formData = new FormData();
+                formData.append('file', file);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert('上传成功');
+                    }
+                }
+                xhr.open('POST', 'http://localhost:8880/');
+                xhr.send(formData)
+            } else {
+                alert('请选择文件');
+            }
+
+        })
+    </script>
+</body>
+
+</html>
