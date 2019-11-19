@@ -73,6 +73,12 @@
                 canvas.getContext('2d').drawImage(img, 0, 0);
             }
         }
+
+        function svg2canvas(svg, canvas){
+            var img = new Image();
+            svg2img(svg, img);
+            img2canvas(img, canvas);
+        }
     </script>
 </body>
 
