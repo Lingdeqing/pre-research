@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 50px;
+            padding: 10px;
+            height: 200px;
+            border: 1px solid red;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .item {
+            height: 80px;
+            margin-bottom: 20px;
+            background: rebeccapurple;
+        }
+
+        .ob {
+            background-color: pink;
+            transition: background-color 1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item ob"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+    <script>
+        const ob = new IntersectionObserver(function (entries) {
+            const el = entries[0].target;
+            // if(entries[0].isIntersecting){
+            if (entries[0].intersectionRatio === 1) {
+                el.style.backgroundColor = 'black';
+            } else {
+                el.style.backgroundColor = 'pink';
+            }
+        }, {
+            root: document.querySelector('.container'),
+            // rootMargin: 0,  // 0表示进入content-box区域才触发相交事件
+            rootMargin: '50px',  // 表示距离视口content-box多远时触发
+            threshold: [1], // 100%进入视口，才触发回调
+        })
+
+        ob.observe(document.querySelector('.ob'));
+    </script>
+</body>
+
+</html>
