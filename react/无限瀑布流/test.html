@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        #app,
+        .list {
+            height: 100%;
+        }
+
+        .list {
+            overflow: auto;
+        }
+
+        .item {
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+
+        class Item extends React.Component {
+
+            shouldComponentUpdate(){
+                return false;
+            }
+            render() {
+                return (
+                    <div className="item">
+                        列表项{this.props.id}
+                    </div>
+                );
+            }
+        }
+
+
+        class List extends React.Component {
+            state = {
+                items: [
+                    {
+                        id: 1,
+                    },
+                    // {
+                    //     id: 2,
+                    // },
+                    {
+                        id: 3,
+                    },
+                ]
+            }
+
+            componentDidMount() {
+            }
+
+            remove = () => {
+                this.setState({
+                    items: this.state.items.filter((item ,index) => index !== 1)
+                })
+            }
+            render() {
+                const { items } = this.state;
+                return (
+                    <div className="list" onScroll={this.onScroll}>
+                        <button type="button" onClick={this.remove}>remove</button>
+                        <div className="content">
+                            {items
+                                .map((item, index) => {
+                                return <Item key={index} {...item} />
+                            })}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        const domContainer = document.querySelector('#app');
+        ReactDOM.render(<List />, domContainer);
+    </script>
+</body>
+
+</html>
