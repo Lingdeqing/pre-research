@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @charset "utf-8";
+
+        /*框架预览 CSS*/
+        .mkeBody {
+            background: #121212;
+        }
+
+        .mkeHeadBox {
+            padding: 30px 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin: 0;
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 3px solid #666;
+            box-shadow: inset 0 -2px 3px #000000;
+            letter-spacing: 1px;
+            font: 26px/26px "微软雅黑";
+        }
+
+        .mkeFooterBox {
+            padding: 25px 10px;
+            text-overflow: ellipsis;
+            margin: 0;
+            color: #fff;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            overflow: hidden;
+            border-top: 3px solid #666;
+            box-shadow: inset 0 2px 3px #000000;
+        }
+
+        .mkeContentBox {
+            background: #000;
+            padding: 10px 0 50px 0
+        }
+
+        .mkeContentBox:after {
+            height: 0;
+            clear: both;
+        }
+
+        .mkeFooterBox p,
+        .mkeFooterBox div {
+            padding: 0;
+            margin: 0;
+            line-height: 26px;
+            font-size: 14px;
+        }
+
+        .mkeFooterBox a {
+            color: #fff;
+            white-space: nowrap
+        }
+
+        .mkeButton {
+            background: #F36;
+            display: inline-block;
+            text-decoration: none;
+            width: 102px;
+            border-radius: 0.3em;
+            transition: all 0.3s ease
+        }
+
+        .mkeButton:hover {
+            background: #FF1550;
+        }
+
+        .mkeURL {
+            font-size: 24px;
+        }
+
+        .mkeFooterBox .mKeBannerAD {
+            width: 728px;
+            height: 90px;
+            margin: 18px auto 0;
+        }
+
+        .mkeFooterBox .mSmallKeBannerAD {
+            display: none;
+        }
+
+        @media only screen and (max-width:900px) {
+            .mkeButton {
+                display: block;
+                margin: 8px auto 0;
+            }
+        }
+
+        @media only screen and (max-width:767px) {
+            .mkeHeadBox {
+                font-size: 18px;
+                padding: 15px 10px;
+            }
+
+            .mkeFooterBox p,
+            .mkeFooterBox div {
+                line-height: 24px;
+                font-size: 12px;
+            }
+
+            .mkeURL {
+                font-size: 22px;
+            }
+
+            .mkeFooterBox .mKeBannerAD {
+                display: none;
+            }
+
+            .mkeFooterBox .mSmallKeBannerAD {
+                width: 300px;
+                height: 250px;
+                margin: 18px auto 0;
+                display: block;
+            }
+        }
+
+        /*End*/
+
+        /*主要CSS*/
+        html,
+        body,
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        @font-face {
+            font-family: 'iconfont';
+            /* project id 198719 */
+            src: url('../t/font_u8lcaa5uh625u3di.eot');
+            src: url('../t/font_u8lcaa5uh625u3di.eot?#iefix') format('embedded-opentype'),
+                url('../t/font_u8lcaa5uh625u3di.woff') format('woff'),
+                url('../t/font_u8lcaa5uh625u3di.ttf') format('truetype'),
+                url('../t/font_u8lcaa5uh625u3di.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 32px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 200px;
+            height: 400px;
+            background-color: #000000;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .pao {
+            width: 61px;
+            height: 68px;
+            position: absolute;
+            background: url("../images/icon-pao.png") center no-repeat;
+            background-size: cover;
+            bottom: 0;
+            left: 70px;
+        }
+
+        .paopao {
+            font-size: 32px;
+            position: absolute;
+            top: -32px;
+        }
+    </style>
+</head>
+
+<body class="mkeBody">
+    <div class="mkeContentBox">
+        <!--效果html开始-->
+        <div class="container">
+            <div class="pao">
+            </div>
+        </div>
+        <script type="text/javascript" src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                paopao();
+            });
+            //需要的参数
+            var pp = {
+                pl: 0,   //生成的paopao随机的居左的位置
+                color: ["ce4f6d", "ca4fce", "4f82ce", "4fce91", "ceca4f"],   //随机添加的颜色
+                c: 0,  //初始化颜色
+                step: 500
+            };
+            function paopao() {
+                //添加元素
+                var html = '<div class="paopao iconfont" style="left: ' + pp.pl + 'px;color: #' + pp.color[pp.c] + '">&#xe60d;</div>';
+                $(".pao").append(html);
+
+                //获取颜色
+                pp.c++;
+                if (pp.c >= pp.color.length) {
+                    pp.c = 0;
+                }
+
+                pp.pl = Math.round(Math.random() * 100 / 3);  //随机位置
+
+                //执行动画
+                $(".paopao").each(function () {
+
+                    if ($(this).index() % 2 == 0) {
+                        pp.step = 100;
+                    } else if ($(this).index() % 3 == 0) {
+                        pp.step = 200;
+                    } else {
+                        pp.step = 300;
+                    }
+
+                    if (!$(this).is(":animated")) {
+                        $(this).animate({            //运动
+                            top: "-300px",
+                            fontSize: "60px",
+                            opacity: "0"
+                        }, (500 - pp.step) * 10,
+                            function () {
+                                $(this).remove();        //清除元素
+                            })
+                    }
+                });
+                //定时器
+                setTimeout(paopao, pp.step);
+            }
+
+        </script>
+        <!--效果html结束-->
+    </div>
+</body>
+
+</html>
