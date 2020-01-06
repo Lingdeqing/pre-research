@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    #box{
+        margin: 50px auto;
+        width: 50px;
+        height: 50px;
+        border: 1px solid red;
+    }
+    .active{
+        animation: a1 1s;
+        animation-fill-mode: both;
+    }
+    @keyframes a1 {
+        from{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(2);
+        }
+        to{
+            transform: scale(1);
+        }
+    }
+    </style>
+
+</head>
+<body>
+    <div id="box"></div>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+    <script>
+        $(document.body).on('click', '#box', function(){
+            var $new = $(this).clone()
+            $(this).replaceWith($new)
+            $new.addClass('active')
+        })
+    </script>
+</body>
+</html>
