@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=`, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body, svg {
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      display: block;
+    }
+    div{
+      mask: black;
+    }
+    .wrapper{
+      margin: 20px;
+      width: 250px; height: 250px;
+      border: 2px solid red;
+    }
+    .scroll{
+      max-height: 100%;
+      overflow: auto;
+    }
+    .mask{
+      width: 250px; height: 250px;
+      background: pink;
+      -webkit-mask-image: linear-gradient(rgba(0,0,0,0) 0, rgba(0,0,0,1) 50px);
+      mask-image: linear-gradient(rgba(0,0,0,0) 0, rgba(0,0,0,1) 50px);
+    }
+    .img{
+      width: 250px; height: 250px;
+      background: linear-gradient(rgba(0,0,0,0) 0, rgba(0,0,0,1) 50px) no-repeat center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+  <div class="mask">
+    <div class="scroll">
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+      </ul>
+    </div>
+  </div></div>
+  <div class="wrapper">
+  <div class="img"></div></div>
+</body>
+
+</html>
