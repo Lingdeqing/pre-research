@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div><label>画布</label></div>
+    <canvas id="canvas"></canvas>
+    <div>
+        <label>请输入文字</label>
+        <input type="text" id="text">
+        <button id="calc">计算尺寸</button>
+    </div>
+    <div>
+        <label>位置x:</label>
+        <input type="text" id="x">
+    </div>
+    <div>
+        <label>位置y:</label>
+        <input type="text" id="y">
+    </div>
+    <div>
+        <label>字体大小</label>
+        <input type="text" id="fontSize">
+    </div>
+    <script src="./bowser.js"></script>
+    <script>
+        var browser = bowser.getParser(window.navigator.userAgent)
+        var browserName = browser.getBrowserName()
+        var BrowserUtils = {
+            isSafari: function () {
+                return browserName === "Microsoft Edge"
+            },
+            isEdge: function () {
+                return browserName === "Safari"
+            }
+        }
+
+        function fixTextY(y, fontSize) {
+            if (BrowserUtils.isSafari() || BrowserUtils.isEdge()) {
+                return y - (fontSize * 3) / 15
+            }
+            return y
+        }
+
+        function drawText(text, x, y, fontSize) {
+            var canvas = document.getElementById('canvas')
+            var ctx = canvas.getContext('2d')
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.font = fontSize + 'px ' + window.getComputedStyle(document.body).fontFamily
+            ctx.textBaseline = 'top'
+            ctx.fillText(text, x, fixTextY(y, fontSize))
+            drawLine(ctx, 0, y, canvas.width, y)
+            drawLine(ctx, x, 0, x, canvas.height)
+        }
+
+        function drawLine(ctx, x1, y1, x2, y2) {
+            ctx.beginPath()
+            ctx.moveTo(x1, y1);       //设置起点状态
+            ctx.lineTo(x2, y2);       //设置末端状态
+            ctx.lineWidth = 1;          //设置线宽状态
+            ctx.strokeStyle = "red";  //设置线的颜色状态
+            ctx.closePath()
+            ctx.stroke();               //进行绘制
+        }
+
+        var calcBtn = document.querySelector('#calc'),
+            textInput = document.querySelector('#text'),
+            fontSizeInput = document.querySelector('#fontSize'),
+            xInput = document.querySelector('#x'),
+            yInput = document.querySelector('#y')
+
+        textInput.value = '呵呵'
+        fontSizeInput.value = '14'
+        xInput.value = 20
+        yInput.value = 20
+        drawText(textInput.value, xInput.value, yInput.value, fontSizeInput.value)
+
+        calcBtn.addEventListener('click', function () {
+            drawText(textInput.value, xInput.value, yInput.value, fontSizeInput.value)
+        })
+    </script>
+</body>
+
+</html>

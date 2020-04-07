@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div><label>画布</label></div>
+    <canvas id="canvas"></canvas>
+    <div>
+        <label>是否碰撞</label>
+        <input type="checkbox" id="result" />
+        <button id="calc">计算碰撞</button>
+    </div>
+    <script>
+
+        function getRandomRect(w, h) {
+            var x1 = Math.random() * w, y1 = Math.random() * h,
+                x2 = Math.random() * w, y2 = Math.random() * h;
+            return {
+                x: Math.min(x1, x2),
+                y: Math.min(y1, y2),
+                w: Math.abs(x1 - x2),
+                h: Math.abs(y1 - y2)
+            }
+        }
+
+        function drawTwoRect() {
+            var canvas = document.getElementById('canvas')
+            var ctx = canvas.getContext('2d')
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+            var r1 = getRandomRect(canvas.width, canvas.height),
+                r2 = getRandomRect(canvas.width, canvas.height)
+            ctx.strokeStyle = 'pink'
+            ctx.strokeRect(r1.x, r1.y, r1.w, r1.h)
+            ctx.strokeStyle = 'gray'
+            ctx.strokeRect(r2.x, r2.y, r2.w, r2.h)
+
+            if (isMeet(r1, r2)) {
+                result.checked = 'checked'
+            } else {
+                result.checked = ''
+            }
+        }
+
+        // 是否相交
+        function isMeet(r1, r2) {
+            return r1.x < r2.x + r2.w && r2.x < r1.x + r1.w && r1.y < r2.y + r2.h && r2.y < r1.y + r1.h
+        }
+
+
+        var calcBtn = document.querySelector('#calc'),
+            result = document.querySelector('#result')
+
+        drawTwoRect()
+
+
+        calcBtn.addEventListener('click', function () {
+            drawTwoRect()
+        })
+    </script>
+</body>
+
+</html>

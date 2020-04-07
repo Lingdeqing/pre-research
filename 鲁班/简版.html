@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            display: block;
+            width: 400px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+
+
+
+
+        class App extends React.Component {
+
+            img = null
+
+            state = {
+                file: null,
+
+                form: {
+                    mainTitle: {
+                        text: '',
+                        x: 30,
+                        y: 30,
+                        fs: 48
+                    },
+                    subTitle: {
+                        text: '',
+                        x: 30,
+                        y: 70,
+                        fs: 28
+                    },
+                    actionText: {
+                        text: '',
+                        x: 30,
+                        y: 100,
+                        fs: 18
+                    }
+                }
+            }
+
+            componentDidMount() {
+
+            }
+
+            onRef = (r) => {
+                if (r) {
+                    this.canvas = r
+                    this.ctx = this.canvas.getContext('2d')
+                }
+            }
+
+            setImage = (e) => {
+                const file = e.target.files[0]
+                const img = new Image()
+                this.img = img
+                img.onload = () => {
+                    // this.canvas.width = img.naturalWidth
+                    // this.canvas.height = img.naturalHeight
+                    // this.ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight)
+                    this.draw()
+                }
+                img.src = URL.createObjectURL(file)
+            }
+
+            clear() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            }
+
+            drawImage(img, x, y, w, h) {
+                this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
+            }
+
+            drawText(text, x, y, fs = 14) {
+                this.ctx.font = fs + "px serif";
+                this.ctx.fillText(text, x, y)
+            }
+
+            draw(){
+                this.clear()
+                this.img && this.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height)
+                const form =  this.state.form
+                Object.keys(form).forEach(key => {
+                    this.drawText(form[key].text, form[key].x, form[key].y, form[key].fs)
+                })
+            }
+
+            setTitle = (e) => {
+                const key = e.target.dataset.key
+                const value = e.target.value
+                this.setState({
+                    form: {
+                        ...this.state.form,
+                        [key]: {
+                            ...this.state.form[key],
+                            text: value,
+                        }
+                    }
+                })
+                this.draw()
+            }
+
+
+            render() {
+                const { form } = this.state
+                return <div className="container">
+                    <input type="file" accept="image/*" onChange={this.setImage} />
+                    <canvas ref={this.onRef} />
+                    <div className="form">
+                        <div>
+                            <label>主文案</label><input type="text" value={form.mainTitle.text} data-key="mainTitle" onChange={this.setTitle} />
+                        </div>
+                        <div>
+                            <label>副文案</label><input type="text" value={form.subTitle.text} data-key="subTitle" onChange={this.setTitle} />
+                        </div>
+                        <div>
+                            <label>行动点</label><input type="text" value={form.actionText.text} data-key="actionText" onChange={this.setTitle} />
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        const domContainer = document.querySelector('#app');
+        ReactDOM.render(<App />, domContainer);
+    </script>
+</body>
+
+</html>

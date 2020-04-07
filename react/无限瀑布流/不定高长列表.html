@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        #app,
+        .list {
+            height: 100%;
+        }
+
+        .list {
+            overflow: auto;
+        }
+
+        .item {
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./faker.js"></script>
+    <script type="text/babel">
+
+        class Item extends React.Component {
+
+            render() {
+                return (
+                    <div className="item">
+                        列表项{this.props.index}
+                    </div>
+                );
+            }
+        }
+
+
+        class List extends React.Component {
+            state = {
+                startIndex: 0,
+                endIndex: 0,
+                items: []
+            }
+            viewportHeight = 0;
+            visibleCount = 0;
+            $list = null;
+            lastScrollTop = 0;
+            lastTime = 0;
+            throttleWait = 100;
+
+            componentDidMount() {
+                this.itemHeight = 60;
+                this.bufferHeight = window.innerHeight;
+                this.viewportHeight = window.innerHeight;
+                this.offsetHeight = (this.viewportHeight + this.bufferHeight) / 2;
+                this.bufferCount = Math.ceil(this.bufferHeight / this.itemHeight);
+                this.visibleCount = Math.ceil(this.viewportHeight / this.itemHeight);
+
+                let items = [];
+                for (let i = 0; i < 20000; i++) {
+                    items.push({
+                        index: i + 1
+                    })
+                }
+                this.setState({
+                    items,
+                    startIndex: 0,
+                    endIndex: this.visibleCount
+                })
+            }
+
+            onScroll = () => {
+                const now = Date.now();
+                if (now - this.lastTime < this.throttleWait) {
+                    if (!this.lastTimer) {
+                        this.lastTimer = setTimeout(this.onScroll, this.lastTime + this.throttleWait - now)
+                    }
+                    return;
+                }
+                if (this.lastTimer) {
+                    clearTimeout(this.lastTimer);
+                    this.lastTimer = null;
+                }
+                this.lastTime = now;
+
+                const $list = this.$list;
+                const scrollTop = $list.scrollTop;
+                const { startIndex, endIndex, items } = this.state;
+                const startOffset = startIndex * this.itemHeight;
+                const endOffset = endIndex * this.itemHeight;
+
+                if ((scrollTop > this.lastScrollTop && scrollTop > startOffset + this.offsetHeight) // 向下滚动
+                    || (scrollTop < this.lastScrollTop && scrollTop < items.length * this.itemHeight - endOffset - (this.viewportHeight - this.offsetHeight) // 向上滚动
+                    )) {
+                    const startIndex = Math.floor(scrollTop / this.itemHeight);
+                    this.setState({
+                        startIndex,
+                        endIndex: startIndex + this.visibleCount
+                    })
+                }
+                this.lastScrollTop = scrollTop;
+            }
+            render() {
+                const { startIndex, endIndex, items } = this.state;
+                const _startIndex = startIndex - this.bufferCount < 0 ? 0 : startIndex - this.bufferCount,
+                    _endIndex = endIndex + this.bufferCount >= items.length ? items.length : endIndex + this.bufferCount;
+                return (
+                    <div className="list" ref={r => this.$list = r} onScroll={this.onScroll}>
+                        <div className="content" style={{
+                            paddingTop: _startIndex * this.itemHeight + 'px',
+                            paddingBottom: (items.length - (_endIndex + 1)) * this.itemHeight + 'px',
+                        }}>
+                            {items
+                                .slice(_startIndex, _endIndex)
+                                .map((item, index) => {
+                                    return <Item key={item.index} {...item} />
+                                })}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        const domContainer = document.querySelector('#app');
+        ReactDOM.render(<List />, domContainer);
+    </script>
+</body>
+
+</html>
