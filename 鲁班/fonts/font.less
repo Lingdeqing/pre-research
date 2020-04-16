@@ -1,0 +1,12 @@
+@fontFamily: Bold, Regular, Medium, Light, Semibold;
+
+.for(@fontFamily, @i: 1) when(@i =< length(@fontFamily)) {
+  @item: extract(@fontFamily, @i);
+  @font-face {
+    font-family: "PingFangSC_@{item}";
+    src: url("./PingFangSC-@{item}.ttf");
+  }
+  .for(@fontFamily, (@i + 1));
+}
+
+.for(@fontFamily);
