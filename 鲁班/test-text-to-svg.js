@@ -1,9 +1,32 @@
-const TextToSVG = require('text-to-svg');
-const textToSVG = TextToSVG.loadSync();
+const TextToSVG = require('text-to-svg')
+const sharp = require('sharp')
 
-const attributes = {fill: 'red', stroke: 'black'};
-const options = {x: 0, y: 0, fontSize: 72, anchor: 'top', attributes: attributes};
-
-const svg = textToSVG.getSVG('hello', options);
-
-console.log(svg);
+const fonts = ['Regular', 'Light', 'Medium', 'Bold', 'Semibold']
+const fs = []
+for (let i = 0; i < fonts.length; i++) {
+    // 多个不同的字体有bug
+    const toSvg = TextToSVG.loadSync(`./fonts/PingFangSC-${fonts[i]}.ttf`);
+    const f = toSvg.getSVG('呵呵',
+        {
+            fontSize: 50,
+            anchor: 'top',
+            attributes: {
+                fill: 'blue'
+            }
+        });
+    fs.push(f)
+}
+sharp("./temp/_luban_7eb0213404f67bafa15a0092e652932f.png")
+    .composite([{
+        input: Buffer.from(Regular),
+        left: 100,
+        top: 50
+    }, {
+        input: Buffer.from(Bold),
+        left: 100,
+        top: 100
+    }, {
+        input: Buffer.from(Medium),
+        left: 100,
+        top: 100
+    },]).toFile('./temp/output.png')
