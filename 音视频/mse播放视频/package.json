@@ -1,0 +1,15 @@
+{
+  "name": "mse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "m3u8-parser": "^4.4.0",
+    "mux.js": "^5.5.4"
+  }
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>切割命令</h2>
+    <code>ffmpeg -i input.mp4 -c:v libx264 -c:a aac -strict -2 -f hls output.m3u8</code>
+    <video class='js-player-m3u8' controls></video>
+    <script type="text/javascript" src="./node_modules/m3u8-parser/dist/m3u8-parser.min.js"></script>
+    <script src="./node_modules/mux.js/dist/mux.min.js"></script>
+    <script>
+        function fetchM3u8(m3u8url) {
+            var parser = new m3u8Parser.Parser();
+            return fetch(m3u8url, {})
+                .then(function (response) {
+                    return response.text();
+                }).then(function (data) {
+                    parser.push(data);
+                    parser.end();
+                    return parser.manifest;
+                })
+        }
+
+        function initVideo(playManifest) {
+            var index = 0;
+            // create a transmuxer:
+            var transmuxer = new muxjs.mp4.Transmuxer();
+            var remuxedSegs = [];
+            var remuxedBytesLength = 0;
+            var remuxedInitSegment = null;
+            var createInitSegment = true;
+            var sourceBuffer;
+
+            var video = document.querySelector('.js-player-m3u8');
+            if (window.MediaSource) {
+                var mediaSource = new MediaSource();
+                video.src = URL.createObjectURL(mediaSource);
+
+                mediaSource.addEventListener('sourceopen', sourceOpen, { once: true });
+
+                // 监听 transmuxer 数据添加
+                transmuxer.on('data', function (segment) {
+                    remuxedSegs.push(segment);
+                    remuxedBytesLength = segment.data.byteLength;
+                    if (!remuxedInitSegment) {
+                        remuxedInitSegment = segment.initSegment;
+                    }
+                    appendBuffer();
+                });
+            } else {
+                console.log("The Media Source Extensions API is not supported.")
+            }
+
+            function sourceOpen(e) {
+                URL.revokeObjectURL(video.src);
+                var mime = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+                var mediaSource = e.target;
+                sourceBuffer = mediaSource.addSourceBuffer(mime);
+                sourceBuffer.addEventListener('updateend', updateEnd);
+                var videoUrl = './video1/' + playManifest.segments[index]['uri'];
+                console.log('.js-log-m3u8', 'Fetch Segment ~' + videoUrl);
+                fetch(videoUrl, {
+                })
+                    .then(function (response) {
+                        return response.arrayBuffer();
+                    })
+                    .then(function (arrayBuffer) {
+                        // data events signal a new fMP4 segment is ready:
+                        transmuxer.push(new Uint8Array(arrayBuffer));
+                        transmuxer.flush();
+                    });
+            }
+
+            var offset = 0;
+            function appendBuffer() {
+                var bytes = null;
+                if (createInitSegment) {
+                    bytes = new Uint8Array(remuxedInitSegment.byteLength + remuxedBytesLength)
+                    bytes.set(remuxedInitSegment, offset);
+                    offset += remuxedInitSegment.byteLength;
+                    createInitSegment = false;
+                } else {
+                    bytes = new Uint8Array(remuxedBytesLength);
+                }
+                var i = offset;
+                bytes.set(remuxedSegs[index].data, i);
+                offset += remuxedSegs[index].byteLength;
+                remuxedBytesLength = 0;
+                // var sourceBuffer = mediaSource.sourceBuffers[index];
+                sourceBuffer.appendBuffer(bytes);
+            }
+
+            function updateEnd() {
+                if (!sourceBuffer.updating && mediaSource.readyState === 'open'
+                    && index == playManifest.segments.length - 1) {
+                    mediaSource.endOfStream();
+                    video.play();
+                    return;
+                }
+                // Fetch the next segment of video when user starts playing the video.
+                // fetchNextSegment();
+            }
+
+            function fetchNextSegment() {
+                var url = './video1/' + playManifest.segments[index]['uri'];
+                fetch(url, { headers: {} })
+                    .then(response => response.arrayBuffer())
+                    .then(data => {
+                        // transmuxer.flush();
+                        transmuxer.push(new Uint8Array(data));
+                        transmuxer.flush();
+                        // var sourceBuffer = mediaSource.sourceBuffers[0];
+                        // sourceBuffer.appendBuffer(data);
+                    });
+            }
+
+        }
+
+
+        fetchM3u8('./video1/output.m3u8')
+            .then((playManifest) => {
+                initVideo(playManifest)
+            })
+
+    </script>
+</body>
+
+</html>
