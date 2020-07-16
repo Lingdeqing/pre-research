@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 300px;
+            height: 300px;
+            border: 1px solid salmon;
+
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* 1个元素 */
+        .avatar:only-child {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* 2个元素 */
+        .avatar:first-child:nth-last-child(2),
+        .avatar:first-child:nth-last-child(2)~.avatar {
+            width: 150px;
+            height: 150px;
+        }
+
+        .avatar:first-child:nth-last-child(2) {
+            margin-right: 150px;
+        }
+
+        .avatar:first-child:nth-last-child(2)~.avatar {
+            margin-left: 150px;
+        }
+
+        /* 3个元素 */
+        .avatar:first-child:nth-last-child(3),
+        .avatar:first-child:nth-last-child(3)~.avatar {
+            width: 150px;
+            height: 150px;
+        }
+
+        .avatar:first-child:nth-last-child(3) {
+            margin-right: 75px;
+            margin-left: 75px;
+        }
+
+        /* 4个元素 */
+        .avatar:first-child:nth-last-child(4),
+        .avatar:first-child:nth-last-child(4)~.avatar {
+            width: 150px;
+            height: 150px;
+        }
+
+        /* 5个元素 */
+        .avatar:first-child:nth-last-child(5),
+        .avatar:first-child:nth-last-child(5)~.avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .avatar:first-child:nth-last-child(5),
+        .avatar:last-child:nth-child(5) {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        /* 6个元素 */
+        .avatar:first-child:nth-last-child(6),
+        .avatar:first-child:nth-last-child(6)~.avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+
+        /* 7个元素 */
+        .avatar:first-child:nth-last-child(7),
+        .avatar:first-child:nth-last-child(7)~.avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .avatar:first-child:nth-last-child(7) {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        /* 8个元素 */
+        .avatar:first-child:nth-last-child(8),
+        .avatar:first-child:nth-last-child(8)~.avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .avatar:first-child:nth-last-child(8) {
+            margin-left: 50px;
+        }
+
+        .avatar:first-child:nth-last-child(8)+.avatar {
+            margin-right: 50px;
+        }
+
+
+        /* 9个元素 */
+        .avatar:first-child:nth-last-child(9),
+        .avatar:first-child:nth-last-child(9)~.avatar {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="avatar" style="background-color: rebeccapurple;"></div>
+        <div class="avatar" style="background-color: pink;"></div>
+        <div class="avatar" style="background-color: blueviolet;"></div>
+        <div class="avatar" style="background-color: palevioletred;"></div>
+        <div class="avatar" style="background-color: olivedrab;"></div>
+        <div class="avatar" style="background-color: palegreen;"></div>
+        <div class="avatar" style="background-color: paleturquoise;"></div>
+        <div class="avatar" style="background-color: aqua;"></div>
+        <div class="avatar" style="background-color: magenta;"></div>
+    </div>
+    <script>
+        document.querySelectorAll('.avatar').forEach(el => {
+            el.addEventListener('click', function () {
+                el.parentNode.removeChild(el)
+            })
+        })
+    </script>
+</body>
+
+</html>

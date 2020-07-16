@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            margin: auto;
+            width: 500px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .block {
+            width: 24%;height: 100px;
+            margin-bottom: 10px;
+            background-color: skyblue;
+        }
+        .block:not(:nth-child(4n)){
+            margin-right: calc(4% / 3);
+        }
+
+
+
+        .container2 {
+            margin: auto;
+            width: 500px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .block2 {
+            width: 24%;height: 100px;
+            margin-bottom: 10px;
+            background-color: skyblue;
+        }
+        /* 最后一行3个元素 */
+        .block2:last-child:nth-child(4n-1){
+            margin-right: calc(4% / 3 + 24%);
+        }
+        /* 最后一行2个元素 */
+        .block2:last-child:nth-child(4n-2){
+            margin-right: calc( 2*(4% / 3 + 24%) );
+        }
+        /* 最后一行1个元素 */
+        .block2:last-child:nth-child(4n-3){
+            margin-right: calc( 3*(4% / 3 + 24%) );
+        }
+
+
+        .container3 {
+            margin: auto;
+            width: 500px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .block3 {
+            margin: 10px;
+            width: 100px;height: 100px;
+            background-color: skyblue;
+        }
+        .block3:last-child{
+            margin-right: auto;
+        }
+
+
+
+
+        .container4 {
+            margin: auto;
+            width: 500px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .block4 {
+            margin: 10px;
+            width: 100px;height: 100px;
+            background-color: skyblue;
+        }
+        .container4::after{
+            content: "";
+            flex: 1;
+            height: 0;
+        }
+
+
+
+        .container5 {
+            margin: auto;
+            width: 500px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .block5 {
+            margin: 10px;
+            width: 100px;height: 100px;
+            background-color: skyblue;
+        }
+        .fix5 {
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 100px;height: 0;
+        }
+
+
+        .container6 {
+            margin: auto;
+            width: 500px;
+            display: grid;
+            justify-content: center;
+            grid-template-columns: repeat(auto-fill, 100px);
+            grid-gap: 10px;
+        }
+        .block6 {
+            width: 100px;height: 100px;
+            background-color: skyblue;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h2>margin-right: calc(4% / 3);模拟space-between</h2>
+    <div class="container">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+    </div>
+
+    <h2>nth-child+last-child判断最后一行元素个数，calc动态设置最后一个元素的margin-right</h2>
+    <div class="container2">
+        <div class="block2"></div>
+        <div class="block2"></div>
+        <div class="block2"></div>
+        <div class="block2"></div>
+        <div class="block2"></div>
+        <div class="block2"></div>
+    </div>
+
+    <h2>宽度不定，块无需上下对齐，最后一个元素margin-right:auto</h2>
+    <div class="container3">
+        <div class="block3" style="width: 100px;"></div>
+        <div class="block3" style="width: 80px;"></div>
+        <div class="block3" style="width: 70px;"></div>
+        <div class="block3" style="width: 90px;"></div>
+        <div class="block3" style="width: 60px;"></div>
+        <div class="block3" style="width: 80px;"></div>
+        <div class="block3" style="width: 70px;"></div>
+        <div class="block3" style="width: 60px;"></div>
+        <div class="block3" style="width: 80px;"></div>
+    </div>
+
+    <h2>宽度不定，块无需上下对齐，最后伪元素flex:1</h2>
+    <div class="container4">
+        <div class="block4" style="width: 100px;"></div>
+        <div class="block4" style="width: 80px;"></div>
+        <div class="block4" style="width: 70px;"></div>
+        <div class="block4" style="width: 90px;"></div>
+        <div class="block4" style="width: 60px;"></div>
+        <div class="block4" style="width: 80px;"></div>
+        <div class="block4" style="width: 70px;"></div>
+        <div class="block4" style="width: 60px;"></div>
+        <div class="block4" style="width: 80px;"></div>
+    </div>
+
+
+    <h2>空白块，列数不固定，使用超过最大列数的空白块占位</h2>
+    <div class="container5">
+        <div class="block5"></div>
+        <div class="block5"></div>
+        <div class="block5"></div>
+        <div class="block5"></div>
+        <div class="block5"></div>
+        <div class="block5"></div>
+        
+        <div class="fix5"></div>
+        <div class="fix5"></div>
+        <div class="fix5"></div>
+        <div class="fix5"></div>
+        <div class="fix5"></div>
+        <div class="fix5"></div>
+        <div class="fix5"></div>
+    </div>
+
+
+    <h2>grid布局</h2>
+    <div class="container6">
+        <div class="block6"></div>
+        <div class="block6"></div>
+        <div class="block6"></div>
+        <div class="block6"></div>
+        <div class="block6"></div>
+        <div class="block6"></div>
+        <div class="block6"></div>
+    </div>
+
+    <h2>参考:</h2>
+    <a href="https://www.zhangxinxu.com/wordpress/2019/08/css-flex-last-align/">让CSS flex布局最后一行列表左对齐的N种方法</a>
+    <br/>
+    https://www.zhangxinxu.com/wordpress/2019/08/css-flex-last-align/</br/>
+</body>
+
+</html>
