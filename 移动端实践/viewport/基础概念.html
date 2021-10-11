@@ -55,12 +55,12 @@
 
         <p>
         <h3>理想viewport宽度</h3>
-        理想viewport，和设备物理宽度高度相关。每个型号的设备是固定的，meta里面可以等于device-width，比如iphone8的理想viewport就是375，chrome浏览器f12时打开手机模拟器那边显示的宽度就是各种型号手机的理想viewport。
+        理想viewport，和设备物理宽度高度相关。每个型号的设备是固定的，meta里面可以从device-width取得，比如iphone8的理想viewport就是375，chrome浏览器f12时打开手机模拟器那边显示的宽度就是各种型号手机的理想viewport。
         </p>
 
         <p>
         <h3>当前viewport宽度</h3>
-        浏览器用来绘制页面内容的画布的大小
+        浏览器用来绘制页面内容的画布的大小，js中可以用window.innerWidth获得
         </p>
 
         <p>
@@ -88,6 +88,7 @@
 
         
         <hr/>
+        <h1>旧版本解读</h1>
         <p>
         <h1>viewport基础概念</h1>
         <p>参考链接:<a href="https://www.cnblogs.com/2050/p/3877280.html">https://www.cnblogs.com/2050/p/3877280.html</a>
@@ -150,6 +151,9 @@
         </p>
         </p>
     </div>
+    <script>
+        alert(`document.body.clientWidth:${document.body.clientWidth}, window.innerWidth:${window.innerWidth}`)
+    </script>
 </body>
 
 </html>
