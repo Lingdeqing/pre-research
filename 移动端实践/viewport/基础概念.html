@@ -16,13 +16,14 @@
     <!-- <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" /> -->
     <title>移动端viewport基础概念</title>
     <style>
-        code{
+        code {
             display: block;
             padding: 5px;
             border-radius: 4px;
             background: black;
             color: #fff;
         }
+
         .mark {
             color: red;
         }
@@ -31,66 +32,122 @@
 
 <body>
     <div class="box">
+        <h1>h5页面viewport解读</h1>
 
         <p>
-            <h1>viewport基础概念</h1>
-            <p>参考链接:<a href="https://www.cnblogs.com/2050/p/3877280.html">https://www.cnblogs.com/2050/p/3877280.html</a></p>
-            <p>
-                <h2>3个viewport</h2>
-                <p>
+        <h3>注意：</h3>
+        不要用chrome浏览器测试viewport，会反映错乱
+        </p>
 
-                    <h3>layout viewport<span class="mark">(存疑???)</span></h3>
-                    布局viewport,document.body.clientWidth，ios上默认为980宽，浏览器现在这个看不见的布局viewport上渲染页面
-                </p>
-                <p>
-                    <h3>visual viewport<span class="mark">(存疑???)</span></h3>
-                    可视viewport或叫度量viewport,window.innerWidth，浏览器再将980的页面缩放显示到visual viewport上面
-                </p>
-                <p>
-                    <h3>idea viewport</h3>
-                    理想viewport，和屏幕一样独立像素一样宽的viewport
-                </p>
-            </p>
-            <p>
-                <h2>缩放比initial-scale</h2>
-                <p>等于idea viewport宽度/当前viewport宽度</p>
-                <p>效果就是看到的页面内容会被缩放，比如设置20px的字体，如果设置intial-scale为2，则字体看起来大了一倍，于是20px就对应原先的40px</p>
-            </p>
-            <p>
-                <h2>width解释</h2>
-                <p>指当前viewport的宽度, width=device-width设置和设备宽度一样，当前viewport就和idea viewport效果一样了</p>
-            </p>
-            <p>
-                <h2>示例</h2>
-                <p>
-                    <code> width=400,initial-scale=1</code>
-                    如果屏幕宽度为360,则当前viewport宽度就是360;
-                    如果屏幕宽度为420时，则当前viewport为420*1
-                </p>
-                <p>
-                    <code>width=400,initial-scale=0.8</code>
-                    如果屏幕宽度为360,则当前viewport宽度就是450;
-                </p>
-                <p>
-                    <h3>解释</h3>
-                    当width和initial-scale冲突时，取大的那个
-                </p>
-            </p>
-            <p>
-                <h2>最佳实践</h2>
-                <p>
-                    <code>width=device-width,initial-scale=1</code>
-                    <p>为啥写俩？这是为了兼容，因为单独设置width，iPhone横屏时device-width取的还是竖屏的宽度，单独设置initial-scale，ie横屏时idea viewport宽度取得是竖屏时的宽度</p>
-                </p>
-                <p>
-                    <h3>方案一</h3>
-                    设计直接设计320或者360宽的图，然后使用上面的最佳实践设置，或者640宽的图，设置尺寸时人工除以2，切图使用2倍图
-                </p>
-                <p>
-                    <h3>方案二</h3>
-                    设计出640的设计图，initial-scale使用0.5
-                </p>
-            </p>
+        <p>
+        <h3>涉及3个主要变量：</h3>
+        <ul>
+            <li>缩放比initial-scale</li>
+            <li>理想viewport宽度(idea viewport)</li>
+            <li>当前viewport宽度</li>
+        </ul>
+        </p>
+
+        <p>
+        <h3>他们的关系是：</h3>
+        当前viewport宽度 * initial-scale >= 理想viewport宽度
+        </p>
+
+        <p>
+        <h3>理想viewport宽度</h3>
+        理想viewport，和设备物理宽度高度相关。每个型号的设备是固定的，meta里面可以等于device-width，比如iphone8的理想viewport就是375，chrome浏览器f12时打开手机模拟器那边显示的宽度就是各种型号手机的理想viewport。
+        </p>
+
+        <p>
+        <h3>当前viewport宽度</h3>
+        浏览器用来绘制页面内容的画布的大小
+        </p>
+
+        <p>
+        <h3>缩放比initial-scale</h3>
+        可以简单理解 缩放比越大， 页面展示越大
+        </p>
+
+        <p>
+        <h3>页面绘制过程</h3>
+        <ol>
+            <li>在宽度等于 当前viewport宽度 的画布上面绘制页面内容</li>
+            <li>把画好的画布按照initial-scale缩放</li>
+            <li>把缩放后的画布再画到 宽度等于理想viewport宽度的画布 上面</li>
+        </ol>
+        </p>
+        
+        <p>
+        <h3>计算规则：</h3>
+        <ul>
+            <li>如果initial-scale和当前viewport宽度二者只设置了一个的值，则另外一个值浏览器根据等式 当前viewport宽度 * initial-scale = 理想viewport宽度 计算得出。这种情况下，页面会正好显示在屏幕里面，不会出现横向滚动条</li>
+            <li>如果initial-scale和当前viewport宽度二者都设置了，就直接按照设置的值来绘制。但是如果不满足不等式 当前viewport宽度 * initial-scale >= 理想viewport宽度 ，则当前viewport值就调整为 理想viewport宽度/initial-scale </li>
+            <li>如果initial-scale和当前viewport宽度二者都不设置，则此时可以 当前viewport 大多数手机默认为980，initial-scale根据等式 当前viewport宽度 * initial-scale = 理想viewport宽度 计算得出</li>
+        </ul>
+        </p>
+
+        
+        <hr/>
+        <p>
+        <h1>viewport基础概念</h1>
+        <p>参考链接:<a href="https://www.cnblogs.com/2050/p/3877280.html">https://www.cnblogs.com/2050/p/3877280.html</a>
+        </p>
+        <p>
+        <h2>3个viewport</h2>
+        <p>
+
+        <h3>layout viewport<span class="mark">(存疑???)</span></h3>
+        布局viewport,document.body.clientWidth，ios上默认为980宽，浏览器现在这个看不见的布局viewport上渲染页面
+        </p>
+        <p>
+        <h3>visual viewport<span class="mark">(存疑???)</span></h3>
+        可视viewport或叫度量viewport,window.innerWidth，浏览器再将980的页面缩放显示到visual viewport上面
+        </p>
+        <p>
+        <h3>idea viewport</h3>
+        理想viewport，和屏幕一样独立像素一样宽的viewport
+        </p>
+        </p>
+        <p>
+        <h2>缩放比initial-scale</h2>
+        <p>等于idea viewport宽度/当前viewport宽度</p>
+        <p>效果就是看到的页面内容会被缩放，比如设置20px的字体，如果设置intial-scale为2，则字体看起来大了一倍，于是20px就对应原先的40px</p>
+        </p>
+        <p>
+        <h2>width解释</h2>
+        <p>指当前viewport的宽度, width=device-width设置和设备宽度一样，当前viewport就和idea viewport效果一样了</p>
+        </p>
+        <p>
+        <h2>示例</h2>
+        <p>
+            <code> width=400,initial-scale=1</code>
+            如果屏幕宽度为360,则当前viewport宽度就是360;
+            如果屏幕宽度为420时，则当前viewport为420*1
+        </p>
+        <p>
+            <code>width=400,initial-scale=0.8</code>
+            如果屏幕宽度为360,则当前viewport宽度就是450;
+        </p>
+        <p>
+        <h3>解释</h3>
+        当width和initial-scale冲突时，取大的那个
+        </p>
+        </p>
+        <p>
+        <h2>最佳实践</h2>
+        <p>
+            <code>width=device-width,initial-scale=1</code>
+        <p>为啥写俩？这是为了兼容，因为单独设置width，iPhone横屏时device-width取的还是竖屏的宽度，单独设置initial-scale，ie横屏时idea viewport宽度取得是竖屏时的宽度</p>
+        </p>
+        <p>
+        <h3>方案一</h3>
+        设计直接设计320或者360宽的图，然后使用上面的最佳实践设置，或者640宽的图，设置尺寸时人工除以2，切图使用2倍图
+        </p>
+        <p>
+        <h3>方案二</h3>
+        设计出640的设计图，initial-scale使用0.5
+        </p>
+        </p>
         </p>
     </div>
 </body>
