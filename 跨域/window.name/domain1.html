@@ -13,6 +13,24 @@
     <p>cd 跨域/window.name</p>
     <p>http-server ./ -p 8085</p>
     <p>http-server ./ -p 8086</p>
+    <p>nginx 配置</p>
+    <textarea style="display: block;width: 800px; height: 300px;">server {
+    listen 80;
+    server_name www.domain1.com;
+
+    location / {
+        alias /Users/Franklin/Workspace/MyGits/pre-research/跨域/window.name/;
+    }
+}
+
+server {
+    listen 80;
+    server_name www.domain2.com;
+
+    location / {
+        alias /Users/Franklin/Workspace/MyGits/pre-research/跨域/window.name/;
+    }
+}</textarea>
     <script>
         var proxy = function (url, callback) {
             var state = 0;
