@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://zh.javascript.info/fetch-crossorigin">https://zh.javascript.info/fetch-crossorigin</a>
+    <p>跨源请求，非简单请求会先发送OPTIONS预检(preflight)请求，检查浏览器是否支持非简单请求的跨源请求</p>
+    <script>
+        async function test() {
+            var response = await fetch('http://localhost:3998/');
+            var text = await response.text()
+            alert(text)
+        }
+        async function test2() {
+            var response = await fetch('http://localhost:3998/', {
+                // method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            var text = await response.text()
+            alert(text)
+        }
+    </script>
+    <button onclick="test()">简单请求</button>
+    <button onclick="test2()">非简单请求</button>
+</body>
+
+</html>
