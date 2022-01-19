@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>注意测试文件名称得是英文名称，否则会上传失败</h2>
+    <p>服务启动命令: mkdir -p tmp_files && DEBUG=example:resume-upload node 断点上传.js</p>
+    <p>
+        <input type="file" id="file-input" />
+        <button type="button" id="upload-btn">上传(自动恢复上次的上传)</button>
+        <button type="button" id="stop-btn">暂停上传</button>
+    </p>
+    <p id="progress">上传进度</p>
+    <script>
+        var $upload = document.getElementById('upload-btn')
+        var $stop = document.getElementById('stop-btn')
+        var $progress = document.getElementById('progress')
+
+        var xhr = null
+        $upload.addEventListener('click', function () {
+            // 正在上传
+            if(xhr) {
+                alert('文件还在上传')
+                return
+            }
+            var input = document.getElementById('file-input');
+            var file = input.files[0];
+            if (file) {
+                status(file, function(startByte){
+                    upload(file, startByte)
+                })
+            } else {
+                alert('请选择文件');
+            }
+        })
+        $stop.onclick = function(){
+            if(xhr){
+                xhr.abort()
+                xhr = null
+            }
+        }
+
+        function getFileId(file){
+            return  file.name
+        }
+        function status(file, cb){
+            var fileId = getFileId(file)
+            var xhr1 = new XMLHttpRequest
+            xhr1.open('GET', '/status')
+            xhr1.setRequestHeader('X-File-Id', fileId)
+            xhr1.send()
+            xhr1.onload = function(){
+                if(xhr1.status === 200){
+                    cb(+xhr1.response)
+                }
+            }
+        }
+        function upload(file, startByte){
+            var fileId = getFileId(file)
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload');
+            xhr.setRequestHeader('X-File-Id', fileId)
+            xhr.setRequestHeader('X-Start-Byte', startByte)
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    alert('上传完成');
+                    xhr = null
+                }
+            }
+            xhr.upload.onprogress = function(event){
+                $progress.innerHTML = event.loaded + '/' + event.total
+            }
+            xhr.send(file.slice(startByte))
+        }
+    </script>
+</body>
+
+</html>
