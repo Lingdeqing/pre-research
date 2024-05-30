@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+
+        .dragresize {
+            position: relative;
+            box-sizing: border-box;
+            border: 2px solid #3fb3ff;
+        }
+
+        .dragresize {
+            position: relative;
+            box-sizing: border-box;
+            border: 2px solid #3fb3ff;
+        }
+
+        .dragresize,
+        .dragresize * {
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .dragresize .rz {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: url(src/assets/images/taro/step1/corner.svg) center/cover;
+        }
+
+        .dragresize .tl {
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        .dragresize .tr {
+            right: 0;
+            top: 0;
+            transform: translate(50%, -50%);
+        }
+
+        .dragresize .bl {
+            left: 0;
+            bottom: 0;
+            transform: translate(-50%, 50%);
+        }
+
+        .dragresize .br {
+            right: 0;
+            bottom: 0;
+            transform: translate(50%, 50%);
+        }
+
+        .slot-item {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 200px;
+            transform: translate3d(100px, 100px, 0);
+        }
+
+        .slot-item .slot-photo,
+        .slot-item .slot-photo-mask {
+            object-fit: fill;
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            user-select: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .disable-user-select {
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="dragresize slot-item">
+            <img class="slot-photo" src="https://mobvoi-weta365-aigc-public.cn-bj.ufileos.com/1792096523392258048.jpg"
+                alt="">
+            <!-- 防止force touch事件 -->
+            <div class="slot-photo-mask"></div>
+
+            <div>
+                <div class="rz tl"></div>
+                <div class="rz tr"></div>
+                <div class="rz bl"></div>
+                <div class="rz br"></div>
+            </div>
+        </div>
+        <textarea>
+            https://xxk-h5-pre.moyin.com/xxk/p1/doc/xxkAgreement
+        </textarea>
+        <input type="file" accept="image/png, image/jpg, image/jpeg">
+    </div>
+    <script src="https://tc-nj-backend-ms-pub-cdn.mobvoi.com/baohuo-mp-cdn/baohuo/js/vconsole3.15.1.min.js"></script>
+    <script>
+        new VConsole();
+    </script>
+
+    <script>
+        const elm = document.querySelector('.dragresize')
+        let actionType = '' // resize move pinch doubletap
+        let resizeDir = 1 //
+        let resizeMin = 30
+        let elmPos = {
+            x: 100,
+            y: 100,
+            w: 200,
+            h: 200
+        }
+        let eleStartPos = {
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0
+        }
+        let touchStartPos = {
+            x: 0,
+            y: 0
+        }
+        let doubleTapEvent = null
+        let pinchStartCenter = {
+            x: 0,
+            y: 0
+        }
+        let pinchStartDistance = 0
+
+        setStyles()
+
+        function getDistance(x1, y1, x2, y2) {
+            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        }
+        elm.addEventListener('touchstart', (e) => {
+            const targetEl = e.target
+            if (targetEl.matches('.rz')) {
+                actionType = 'resize'
+                resizeDir = targetEl.matches('.tl,.bl') ? -1 : 1
+            } else {
+                actionType = 'move'
+            }
+            const now = Date.now()
+            const touch1 = e.touches[0]
+            const touch2 = e.touches[1];
+            const rect = elm.getBoundingClientRect()
+            eleStartPos = { ...elmPos }
+            touchStartPos = {
+                x: touch1.clientX,
+                y: touch1.clientY,
+            }
+            if (e.touches.length > 1) {
+                pinchStartDistance = getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
+                pinchStartCenter = {
+                    x: (touch1.clientX + touch2.clientX) / 2 - rect.left,
+                    y: (touch1.clientY + touch2.clientY) / 2 - rect.top
+                }
+            }
+
+            if (e.touches.length === 1 && doubleTapEvent && Math.abs(doubleTapEvent.x - touch1.clientX) < 10 &&
+                Math.abs(doubleTapEvent.y - touch1.clientY) < 10 &&
+                Math.abs(doubleTapEvent.time - now) < 300) {
+                // double tab
+                doubleTapEvent = null
+                actionType = ''
+                // 以点击点为中心放大2倍
+                const originRect = {
+                    x: 100,
+                    y: 100,
+                    w: 200,
+                    h: 200,
+                }
+                if (elmPos.w > originRect.w) {
+                    Object.assign(elmPos, originRect)
+                } else {
+                    const scale = 2
+                    elmPos.w = originRect.w * scale
+                    elmPos.h = originRect.h * scale
+                    const tapPoint = {
+                        x: touch1.clientX - rect.left,
+                        y: touch1.clientY - rect.top
+                    }
+                    elmPos.x = elmPos.x - (scale - 1) * tapPoint.x
+                    elmPos.y = elmPos.y - (scale - 1) * tapPoint.y
+                }
+                setStyles()
+                return
+            }
+            doubleTapEvent = e.touches.length === 1 ? {
+                x: touch1.clientX,
+                y: touch1.clientY,
+                time: now
+            } : null
+            document.documentElement.classList.add('disable-user-select')
+        })
+
+        document.addEventListener('touchmove', (e) => {
+            if (!actionType) return
+            e.preventDefault()
+
+            const touch = e.touches[0]
+            const touch1 = e.touches[0]
+            const touch2 = e.touches[1];
+            if (e.touches.length > 1) {
+                const touchDistance = getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
+                const scale = touchDistance / pinchStartDistance
+
+                // pinch
+                actionType = 'pinch'
+
+                elmPos.w = eleStartPos.w * scale
+                elmPos.h = eleStartPos.h * scale
+
+
+                elmPos.x = eleStartPos.x - (scale - 1) * pinchStartCenter.x
+                elmPos.y = eleStartPos.y - (scale - 1) * pinchStartCenter.y
+
+                setStyles()
+                return
+            }
+
+            // resize
+            if (actionType === 'resize') {
+
+                let deltaX = resizeDir * (touch.clientX - touchStartPos.x)
+                if (eleStartPos.w + deltaX * 2 < resizeMin) {
+                    deltaX = (resizeMin - eleStartPos.w) / 2
+                }
+                console.log('===> deltaX', deltaX)
+                // const deltaY = touch.clientY - touchStartPos.y
+                const aspectRatio = eleStartPos.h / eleStartPos.w
+                const deltaY = deltaX * aspectRatio // 保持比例
+
+                elmPos.w = eleStartPos.w + deltaX * 2
+                elmPos.h = eleStartPos.h + deltaY * 2
+
+                elmPos.x = eleStartPos.x - deltaX
+                elmPos.y = eleStartPos.y - deltaY
+
+                setStyles()
+                return
+            }
+
+            if (e.touches.length === 1) {
+                // move
+                const deltaX = touch.clientX - touchStartPos.x
+                const deltaY = touch.clientY - touchStartPos.y
+
+                elmPos.x = eleStartPos.x + deltaX
+                elmPos.y = eleStartPos.y + deltaY
+                setStyles()
+            }
+        })
+        document.addEventListener('touchend', (e) => {
+            if (!actionType) return
+            actionType = ''
+            document.documentElement.classList.remove('disable-user-select')
+        })
+
+        function setStyles(options) {
+            const { transition = false, transitionOrigin = 'center' } = {
+                ...options
+            }
+            Object.assign(elm.style, {
+                width: elmPos.w + 'px',
+                height: elmPos.h + 'px',
+                transform: `translate3d(${elmPos.x}px,${elmPos.y}px,0)`
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>
