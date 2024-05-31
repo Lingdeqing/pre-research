@@ -150,11 +150,11 @@
             y: 0
         }
         let doubleTapEvent = null
-        let pinchStartCenter = {
+        let pinchEvent = {
             x: 0,
-            y: 0
+            y: 0,
+            distance: 0
         }
-        let pinchStartDistance = 0
 
         setStyles()
 
@@ -179,10 +179,10 @@
                 y: touch1.clientY,
             }
             if (e.touches.length > 1) {
-                pinchStartDistance = getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
-                pinchStartCenter = {
+                pinchEvent = {
                     x: (touch1.clientX + touch2.clientX) / 2 - rect.left,
-                    y: (touch1.clientY + touch2.clientY) / 2 - rect.top
+                    y: (touch1.clientY + touch2.clientY) / 2 - rect.top,
+                    distance: getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
                 }
             }
 
@@ -231,8 +231,9 @@
             const touch1 = e.touches[0]
             const touch2 = e.touches[1];
             if (e.touches.length > 1) {
+                // multiple touch
                 const touchDistance = getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
-                const scale = touchDistance / pinchStartDistance
+                const scale = touchDistance / pinchEvent.distance
 
                 // pinch
                 actionType = 'pinch'
@@ -241,8 +242,8 @@
                 elmPos.h = eleStartPos.h * scale
 
 
-                elmPos.x = eleStartPos.x - (scale - 1) * pinchStartCenter.x
-                elmPos.y = eleStartPos.y - (scale - 1) * pinchStartCenter.y
+                elmPos.x = eleStartPos.x - (scale - 1) * pinchEvent.x
+                elmPos.y = eleStartPos.y - (scale - 1) * pinchEvent.y
 
                 setStyles()
                 return
@@ -286,10 +287,7 @@
             document.documentElement.classList.remove('disable-user-select')
         })
 
-        function setStyles(options) {
-            const { transition = false, transitionOrigin = 'center' } = {
-                ...options
-            }
+        function setStyles() {
             Object.assign(elm.style, {
                 width: elmPos.w + 'px',
                 height: elmPos.h + 'px',
