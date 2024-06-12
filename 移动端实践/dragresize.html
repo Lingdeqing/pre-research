@@ -184,6 +184,8 @@
                     y: (touch1.clientY + touch2.clientY) / 2 - rect.top,
                     distance: getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
                 }
+            } else {
+                pinchEvent = null
             }
 
             if (e.touches.length === 1 && doubleTapEvent && Math.abs(doubleTapEvent.x - touch1.clientX) < 10 &&
@@ -230,7 +232,7 @@
             const touch = e.touches[0]
             const touch1 = e.touches[0]
             const touch2 = e.touches[1];
-            if (e.touches.length > 1) {
+            if (pinchEvent && e.touches.length > 1) {
                 // multiple touch
                 const touchDistance = getDistance(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY)
                 const scale = touchDistance / pinchEvent.distance
