@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .lines {
+            width: 180px;
+            max-height: 70px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lines">
+        文字最多显示两行文字最多显示两行文字最多显示两行文字最多显示两行文字最多显示两行文字最多显示两行文字最多显示两行文字最多显示两行
+    </div>
+    <script>
+        const lines = document.querySelector('.lines')
+        if (lines.scrollHeight > lines.offsetHeight) {
+            // 超出隐藏
+            const totalText = lines.textContent
+            let foldLength = totalText.length
+            do {
+                foldLength--
+                lines.innerHTML = totalText.slice(0, foldLength) + `<span class="lines-unfold"> ...<span style="color:rgb(0, 0, 238)">展开</span></span>`
+            } while ((lines.scrollHeight > lines.offsetHeight))
+            lines.addEventListener('click', (e) => {
+                if (e.target.matches('.lines-unfold') || e.target.parentNode.matches('.lines-unfold')) {
+                    lines.style.maxHeight = "none"
+                    lines.style.height = "auto"
+                    lines.innerHTML = totalText
+                    // lines.innerHTML = totalText + `<span class="lines-fold"><span style="color:rgb(0, 0, 238)">收起</span></span>`
+                }
+
+                // else if (e.target.matches('.lines-fold')) {
+                //     lines.style.maxHeight = ""
+                //     lines.style.height = ""
+                // }
+            })
+        }
+    </script>
+</body>
+
+</html>
