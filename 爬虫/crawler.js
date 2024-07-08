@@ -52,7 +52,7 @@ async function fetchPage(url, onNextFetched) {
             if (pageIndex < 2) {
 
                 await fetchPage(new URL(url).origin + nextPageLink, (info) => {
-                    nextLinkHtml = `<a href="./${info.fileName}">下一页</a>`
+                    nextLinkHtml = `<a href="./${encodeURIComponent(info.fileName)}">下一页</a>`
                     outputCurrent()
                 });
             }
