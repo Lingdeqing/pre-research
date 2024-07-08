@@ -6,7 +6,7 @@ const path = require('path')
 
 // 定义一个函数来获取页面内容和下一个页面的链接
 let pageIndex = 0
-const maxPage = 2
+const maxPage = 10000000
 async function fetchPage({ url, prevFileName, onNextFetched }) {
     try {
         const response = await axios.get(url);
@@ -42,7 +42,7 @@ async function fetchPage({ url, prevFileName, onNextFetched }) {
             <div>${footerHtml}</div>`)
         }
 
-        if (!nextPageLink || pageIndex >= maxPage) {
+        if (!nextPageLink || pageIndex >= maxPage || title.trim() === '开新书了') {
             outputCurrent()
         } else {
             pageIndex++
