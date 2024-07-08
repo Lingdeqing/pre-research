@@ -35,7 +35,7 @@ async function fetchPage({ url, prevFileName, onNextFetched }) {
         const outputCurrent = () => {
             if (outputed) return
             outputed = true
-            const footerHtml = `<div style="display:flex;justify-content:space-between;">${prevFileName ? `<a href="./${encodeURIComponent(prevFileName)}">上一页</a>` : ''}${nextFileName ? `<a href="./${encodeURIComponent(nextFileName)}">下一页</a>` : ''}</div>`
+            const footerHtml = `${prevFileName ? `<p><a href="./${encodeURIComponent(prevFileName)}">上一页</a></p>` : ''}${nextFileName ? `<p><a href="./${encodeURIComponent(nextFileName)}">下一页</a></p>` : ''}`
             fse.outputFile(path.resolve(__dirname, `河神/${currentFileName}`), `<h1>${title}</h1>
             <div>${footerHtml}</div>
             <div>${articleHtml}</div>
