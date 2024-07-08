@@ -23,8 +23,10 @@ async function fetchPage(url, onNextFetched) {
         let nextPageLink = $('#pb_next').attr('href');
         let nextLinkHtml = ''
         let currentIndex = pageIndex
+        let currentFileName = `${currentIndex}_${title.replace(/\s+/, '_')}.md`
         onNextFetched?.({
-            title
+            title,
+            fileName: currentFileName
         })
 
         // 输出文件
@@ -32,7 +34,7 @@ async function fetchPage(url, onNextFetched) {
         const outputCurrent = () => {
             if (outputed) return
             outputed = true
-            fse.outputFile(path.resolve(__dirname, `河神/${currentIndex}_${title.replace(/\s+/, '_')}.md`), `<h1>${title}</h1>
+            fse.outputFile(path.resolve(__dirname, `河神/${currentFileName}`), `<h1>${title}</h1>
             <div>${nextLinkHtml}</div>
             <div>${articleHtml}</div>
             <div>${nextLinkHtml}</div>`)
@@ -50,8 +52,7 @@ async function fetchPage(url, onNextFetched) {
             if (pageIndex < 2) {
 
                 await fetchPage(new URL(url).origin + nextPageLink, (info) => {
-                    const nextTitle = info.title
-                    nextLinkHtml = `<a href="./${nextTitle.replace(/\s+/, '_')}.md">下一页</a>`
+                    nextLinkHtml = `<a href="./${info.fileName}">下一页</a>`
                     outputCurrent()
                 });
             }
