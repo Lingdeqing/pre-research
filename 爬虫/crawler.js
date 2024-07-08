@@ -5,7 +5,8 @@ const path = require('path')
 
 
 // 定义一个函数来获取页面内容和下一个页面的链接
-async function fetchPage(url) {
+let pageIndex = 0
+async function fetchPage(url, onNextFetched) {
     try {
         const response = await axios.get(url);
         const $ = cheerio.load(response.data);
@@ -21,24 +22,39 @@ async function fetchPage(url) {
         // 获取下一个页面的链接
         let nextPageLink = $('#pb_next').attr('href');
         let nextLinkHtml = ''
-        if (nextPageLink) {
-            // nextPageLink = new URL(url).origin + nextPageLink
-            nextLinkHtml = `<a href="${nextPageLink}">下一页</a>`
+        let currentIndex = pageIndex
+        onNextFetched?.({
+            title
+        })
+
+        // 输出文件
+        let outputed = false
+        const outputCurrent = () => {
+            if (outputed) return
+            outputed = true
+            fse.outputFile(path.resolve(__dirname, `河神/${currentIndex}_${title.replace(/\s+/, '_')}.md`), `<h1>${title}</h1>
+            <div>${nextLinkHtml}</div>
+            <div>${articleHtml}</div>
+            <div>${nextLinkHtml}</div>`)
         }
 
-        // 打印标题和文章内容
-        console.log(`Title: ${title}`);
-        console.log('Article HTML:');
-        console.log(articleHtml);
-        fse.outputFile(path.resolve(__dirname, `河神/${title.replace(/\s+/, '_')}.md`), `<h1>${title}</h1>
-        <div>${nextLinkHtml}</div>
-        <div>${articleHtml}</div>
-        <div>${nextLinkHtml}</div>`)
+        if (!nextPageLink) {
+            outputCurrent()
+        } else {
+            pageIndex++
+            // setTimeout(() => {
+            //     outputCurrent()
+            // })
 
-        // 递归调用以爬取下一个页面
-        if (nextPageLink) {
-            // nextPageLink = new URL(url).origin + nextPageLink
-            // await fetchPage(nextPageLink);
+            // 递归调用以爬取下一个页面
+            if (pageIndex < 2) {
+
+                await fetchPage(new URL(url).origin + nextPageLink, (info) => {
+                    const nextTitle = info.title
+                    nextLinkHtml = `<a href="./${nextTitle.replace(/\s+/, '_')}.md">下一页</a>`
+                    outputCurrent()
+                });
+            }
         }
 
 
