@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            background-color: pink;
+        }
+
+
+        .tabs {
+            --top-shadow: greenyellow;
+            --bottom-shadow: green;
+
+            width: 800px;
+            display: flex;
+            height: 60px;
+            border: 1px solid red;
+
+            .tab-item {
+                position: relative;
+                flex: 1;
+                background: blue;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+
+
+
+                &.not-active {}
+
+                &.active {
+                    background: #fff;
+
+                    &::before {
+                        content: "";
+                        width: 30px;
+                        height: 100%;
+                        position: absolute;
+                        left: -30px;
+                        top: 0;
+                        background: green;
+                        clip-path: path('M 0 200 L 0,75 A 5,5 0,0,1 150,75 L 200 200 z');
+                    }
+
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a style="display: block;margin-bottom: 100px;"
+        href="https://juejin.cn/post/7230737419842633788">实现tabs圆角及反圆角效果（PLUS）
+    </a>，这个链接的方式适用场景少，很难调试好，不如直接找设计切几张图片了
+
+    <div class="tabs">
+        <div class="tab-item not-active">小猫</div>
+        <div class="tab-item active">小猫</div>
+        <div class="tab-item not-active">小猫</div>
+    </div>
+</body>
+
+</html>
